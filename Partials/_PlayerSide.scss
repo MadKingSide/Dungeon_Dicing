@@ -1,0 +1,14 @@
+.player {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    width: 90%;
+    height: 300px;
+    border: 2px solid white;
+    border-radius: 10px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
