@@ -11,10 +11,17 @@
         <div class="enemies">
 
         </div>
+        <div class="monsterSelector">
+            <select id="monsterselect" onchange="monsterselect(value)">
+                <option value="none" >Choose a monster</option>
+                <option value="Goblin" >Goblin</option>
+                <option value="Wolf" >Wolf</option>
+            </select>
+            <button class="Spawn">Spawn Monster</button>
+        </div>
         <div class="player">
 
         </div>
-        <button class="trying">spawn monster</button>
     </main>
     <script src="./script.js"></script>
 </body>

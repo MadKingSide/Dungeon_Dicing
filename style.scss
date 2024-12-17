@@ -1,5 +1,11 @@
 @use "partials/Background";
 @use "partials/EnemiesSide";
 @use "partials/EnemyCard";
+@use "partials/ButtonsNMaps";
 
 @use "partials/PlayerSide";
+
+
+* {
+    user-select: none !important;
+}
