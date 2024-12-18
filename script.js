@@ -1,23 +1,73 @@
 const monsters = {
-    Goblin : {
-        Name : "Goblin",
+    SpearGoblin : {
+        Name : "Goblin (Spear)",
+        Health : 9,
+        Attack : 4,
+    },
+    SwordGoblin : {
+        Name : "Goblin (Sword)",
         Health : 10,
+        Attack : 3,
+    },
+    MaceGoblin : {
+        Name : "Goblin (Mace)",
+        Health : 10,
+        Attack : 3,
+    },
+    BowGoblin : {
+        Name : "Goblin (Bow)",
+        Health : 8,
+        Attack : 3,
+    },
+    ShamanGoblin : {
+        Name : "Goblin Shaman",
+        Health : 13,
         Attack : 5,
+    },
+    HeroGoblin : {
+        Name : "Goblin Hero",
+        Health : 30,
+        Attack : 7,
     },
     Wolf : {
         Name : "Wolf",
-        Health : 5,
+        Health : 15,
         Attack : 7,
+    },
+    OldWolf : {
+        Name : "Old Wolf",
+        Health : 7,
+        Attack : 8,
+    },
+    WereWolf : {
+        Name : "Werewolf",
+        Health : 45,
+        Attack : 12,
+    },
+    WolfKing : {
+        Name : "Wolf King",
+        Health : 25,
+        Attack : 15,
+    },
+    Bear : {
+        Name : "Bear",
+        Health : 50,
+        Attack : 10,
+    },
+    BearKing : {
+        Name : "Bear King",
+        Health : 70,
+        Attack : 17,
+    },
+    Troll : {
+        Name : "Troll",
+        Health : 90,
+        Attack : 21,
     },
 }
 
 const enemiesSide = document.querySelector(".enemies");
 const enemyCreator = Object.keys(monsters);
-
-for (let i = 0; i < enemyCreator.length; i++) {
-    //console.log(enemyCreator[i]);
-    //console.log(monsters[enemyCreator[i]]);
-}
 
 let area = "Forest";
 let areaNumber;
@@ -31,8 +81,18 @@ switch (area) {
         break;
 }
 
-let monsterselector = document.querySelector(".monsterselect");
+let monsterselector = document.querySelector("#monsterselect");
 let monsterselected = "none";
+
+for (let i = 0; i < enemyCreator.length; i++) {
+    //console.log(enemyCreator[i]);
+    //console.log(monsters[enemyCreator[i]]);
+    let monsterOption = document.createElement("option");
+    monsterOption.innerHTML = `${monsters[enemyCreator[i]].Name}`;
+    monsterOption.value = `${enemyCreator[i]}`;
+
+    monsterselector.appendChild(monsterOption);
+}
 
 function monsterselect(monster) {
     console.log(monster);
