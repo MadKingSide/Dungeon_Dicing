@@ -9,3 +9,13 @@
 * {
     user-select: none !important;
 }
+
+main {
+    position: relative;
+    max-width: 1400px;
+    height: 100vh;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

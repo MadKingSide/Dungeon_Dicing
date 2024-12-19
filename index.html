@@ -12,15 +12,59 @@
 
         </div>
         <div class="monsterSelector">
-            <select id="monsterselect" onchange="monsterselect(value)">
+            <select id="monsterselect" class="monsterSelector__select" onchange="monsterselect(value)">
                 <option value="none" >Choose a monster</option>
             </select>
             <button class="Spawn">Spawn Monster</button>
         </div>
         <div class="player">
 
+            <div class="Character">
+                <div class="Character__info">
+                    <img src="" alt="" class="Character__portrait">
+                    <h3 class="Name">Name</h3>
+                    <h3 class="Class">Class</h3>
+                    <h3 class="Level">Level</h3>
+                    <h3 class="Exp">Exp</h3>
+                </div>
+                <div class="Character__stats">
+                    <div>
+                        <h3>Health : </h3>
+                        <h3 class="healthBar"></h3>
+                    </div>
+                    <div>
+                        <h3>Attack Multiplier : </h3>
+                        <h3 class="AttMulti"></h3>
+                    </div>
+                    <div>
+                        <h3>Armor : </h3>
+                        <h3 class="Armor"></h3>
+                    </div>
+                    <div>
+                        <h3>Shield : </h3>
+                        <h3 class="Shield"></h3>
+                    </div>
+                    <div>
+                        <button> Open Bag</button>
+                    </div>
+                </div>
+                <div class="Character__Equipment">
+                    <h3>pain</h3>
+                </div>
+            </div>
+
+            <div class="CharacterCreator">
+                <div class="CharacterCreator__blur"></div>
+                <div class="CharacterCreator__menu">
+                    <Select id="Characterselect" class="CharacterCreator__select">
+                        <option value="none">Choose a Hero</option>
+                    </Select>
+                    <input type="text" maxlength="15" class="CharacterCreator__name" placeholder="Choose a name">
+                    <button class="CharacterCreator__confirm">Confirm</button> 
+                </div>
+            </div>
         </div>
     </main>
-    <script src="./script.js"></script>
+    <script src="./MonsterNHeroes.js"></script>
 </body>
 </html>
