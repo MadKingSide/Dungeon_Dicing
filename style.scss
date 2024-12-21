@@ -3,6 +3,8 @@
 @use "partials/EnemyCard";
 @use "partials/ButtonsNMaps";
 
+@use "partials/Bag";
+
 @use "partials/PlayerSide";
 
 
@@ -18,4 +20,8 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.unDisplay {
+    display: none !important;
 }

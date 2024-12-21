@@ -27,7 +27,7 @@ body {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .enemyCard {
@@ -47,6 +47,57 @@ body {
   top: 50vh;
   left: 50vw;
   transform: translate(-50%, -50%);
+}
+
+.bag {
+  position: absolute;
+  width: 80%;
+  max-width: 500px;
+  aspect-ratio: 1/1;
+  background-color: blue;
+  border: 2px solid white;
+  border-radius: 10px;
+  overflow: auto;
+}
+.bag__category {
+  display: flex;
+  justify-content: space-around;
+  position: sticky;
+  top: 0;
+  background-color: red;
+  width: 100%;
+  height: 15%;
+  text-align: center;
+}
+.bag__menu {
+  background-color: grey;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.bag__items:hover {
+  background-color: white;
+}
+.bag__attacks:hover {
+  background-color: white;
+}
+.bag__close {
+  max-width: 80px;
+  aspect-ratio: 1/1;
+}
+.bag__close:hover {
+  background-color: white;
+}
+.bag__container {
+  width: 100%;
+  height: 100%;
+}
+.bag__container__items {
+  background-color: green;
+}
+.bag__container__attacks {
+  background-color: blue;
 }
 
 .player {
@@ -124,4 +175,8 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.unDisplay {
+  display: none !important;
 }/*# sourceMappingURL=style.css.map */
