@@ -76,18 +76,30 @@ body {
   flex-direction: column;
   justify-content: center;
 }
-.bag__items:hover {
+.bag__menu__items:hover {
   background-color: white;
 }
-.bag__attacks:hover {
+.bag__menu__attacks:hover {
   background-color: white;
 }
-.bag__close {
+.bag__menu__close {
   max-width: 80px;
   aspect-ratio: 1/1;
 }
-.bag__close:hover {
+.bag__menu__close:hover {
   background-color: white;
+}
+.bag__items {
+  width: 20%;
+  height: 250px;
+  padding: 10px;
+  margin: 10px 2%;
+  border: 2px solid white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 .bag__container {
   width: 100%;
@@ -95,9 +107,25 @@ body {
 }
 .bag__container__items {
   background-color: green;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: -moz-fit-content;
+  height: fit-content;
+  min-height: 100%;
 }
 .bag__container__attacks {
   background-color: blue;
+}
+
+.notification {
+  position: absolute;
+  width: 80%;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 20px 10px;
+  background-color: aliceblue;
+  text-align: center;
 }
 
 .player {
