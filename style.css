@@ -120,12 +120,23 @@ body {
 
 .notification {
   position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.notification__card {
   width: 80%;
   height: -moz-fit-content;
   height: fit-content;
   padding: 20px 10px;
   background-color: aliceblue;
   text-align: center;
+}
+
+.ClickToClose {
+  margin-top: 10px;
 }
 
 .player {

@@ -31,7 +31,8 @@ let bagAttacksMenu = document.querySelector(".bag__menu__attacks"); //the div to
 let bagItemsContainer = document.querySelector(".bag__container__items"); //the bag's item section
 let bagAttacksContainer = document.querySelector(".bag__container__attacks"); //the bag's attack section
 
-let notification = document.querySelector(".notification"); //the div to use for when the player need to see text (loot, discussion, examining something)
+let notification = document.querySelector(".notification"); //click anywhere to make the pop up disappear
+let notificationText = document.querySelector(".notification__text"); //the div to use for when the player need to see text (loot, discussion, examining something)
 
 //to see which area the player is in to decide what type of monster to spawn
 let area = "Forest";
@@ -54,6 +55,7 @@ let CharacterShield;
 let GainedExp = 0; //to calculate the exp won during a fight
 
 let InventoryLoot = []; //will calculate and store how many and what items you have in your inventory
+let LootDropArray = [];
 
 /*###########################
 #############################
@@ -572,12 +574,22 @@ document.querySelector(".Spawn").addEventListener("click", function () {
     let RandomMonster = "nothing";
     //console.log(monsterselected);
     if (monsterselected == "none") {
-        RandomMonster = Math.floor((Math.random() * enemyCreator.length) + areaNumber);
+
+        RandomMonster = enemyCreator[Math.floor((Math.random() * enemyCreator.length) + areaNumber)];
+        new Monster(0, 0, RandomMonster);
+
+    } else if (monsterselected == "multiple") {
+        RandomMonster = [];
+
+        for (let i = 0; i < Math.floor((Math.floor(Math.random() * 3) + 2)); i++) { //minimum of 2 monsters
+            RandomMonster = enemyCreator[Math.floor((Math.random() * enemyCreator.length) + areaNumber)];
+            new Monster(0, 0, RandomMonster);
+        }
+
     } else {
         RandomMonster = monsterselected;
+        new Monster(0, 0, RandomMonster);
     }
-
-    new Monster(0, 0, RandomMonster);
 })
 
 
@@ -590,9 +602,9 @@ class Monster {
         this.CreateCard()
 
         if (!isNaN(this.MonsterNum)) {
-            this.RandomMonster();
+            this.RandomMonster(this.MonsterNum);
         } else {
-            this.selectedMonster()
+            this.selectedMonster(this.MonsterNum);
         }
 
     }
@@ -620,24 +632,27 @@ class Monster {
 
     }
 
-    RandomMonster() {
-        this.name.innerHTML = monsters[enemyCreator[this.MonsterNum]].Name;
-
-        this.healthCount.innerHTML = monsters[enemyCreator[this.MonsterNum]].Health;
-        this.Health = monsters[enemyCreator[this.MonsterNum]].Health;
-
-        this.attack.innerHTML = monsters[enemyCreator[this.MonsterNum]].Attack;
-
-        enemiesSide.appendChild(this.card);
-    }
-
-    selectedMonster() {
+    /*RandomMonster() {
+        this.MonsterNum = enemyCreator[this.MonsterNum];
+        console.log(this.MonsterNum)
         this.name.innerHTML = monsters[enemyCreator[enemyCreator.indexOf(this.MonsterNum)]].Name;
 
         this.healthCount.innerHTML = monsters[enemyCreator[enemyCreator.indexOf(this.MonsterNum)]].Health;
         this.Health = monsters[enemyCreator[enemyCreator.indexOf(this.MonsterNum)]].Health;
 
         this.attack.innerHTML = monsters[enemyCreator[enemyCreator.indexOf(this.MonsterNum)]].Attack;
+
+        enemiesSide.appendChild(this.card);
+    }*/
+
+    selectedMonster(monster) {
+        console.log(monster);
+        this.name.innerHTML = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Name;
+
+        this.healthCount.innerHTML = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Health;
+        this.Health = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Health;
+
+        this.attack.innerHTML = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Attack;
 
         enemiesSide.appendChild(this.card);
     }
@@ -661,7 +676,6 @@ function MonsterKilled(MonsterKilled) {
     GainedExp += monsters[enemyCreator[enemyCreator.indexOf(MonsterKilled)]].Exp;
 
     let NumberOfLoot = monsters[enemyCreator[enemyCreator.indexOf(MonsterKilled)]].Loot.Number;
-    let LootDropArray = [];
 
     for (let i = 0; i < NumberOfLoot; i++) {
         let lootPercentage = Math.floor(Math.random() * 100) + 1;
@@ -678,13 +692,14 @@ function MonsterKilled(MonsterKilled) {
         }
     }
     
-    //console.log(LootDropArray)
+    console.log(LootDropArray)
 
-    FightWon(LootDropArray, GainedExp);
-
+    if (enemiesSide.childElementCount <= 0) {
+        FightWon(LootDropArray, GainedExp);
+    }
 }
 
-function UpdateInfo() {
+function LevelUp() {
     CharacterExp = CharacterExp - Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].ExpNeeded;
 
     CharacterLevel++;
@@ -705,13 +720,13 @@ function UpdateInfo() {
 function FightWon(lootarray, exp) {
     let expcount = document.createElement("h3");
     expcount.innerHTML = `You've won ${exp} experience.`;
-    notification.appendChild(expcount);
+    notificationText.appendChild(expcount);
 
     lootarray.forEach(element => {
 
         let lootdropped = document.createElement("h3");
         lootdropped.innerHTML = `${element.Name}`;
-        notification.appendChild(lootdropped);
+        notificationText.appendChild(lootdropped);
 
         if (InventoryLoot[LootTable[LootTable.indexOf(`${element.ID}`)]].Count == 0) {
     
@@ -744,17 +759,16 @@ function FightWon(lootarray, exp) {
         }
     });
 
-    let ClickToClose = document.createElement("h3");
-    ClickToClose.innerHTML = `Click here to close.`;
-    notification.appendChild(ClickToClose);
-
     CharacterExp += exp;
+
+    //resets variables for next encounter
     GainedExp = 0;
+    LootDropArray = [];
 
     notification.classList.remove("unDisplay");
 
     if (CharacterExp >= Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].ExpNeeded) {
-        UpdateInfo();
+        LevelUp();
     }
 
     CharacterExpSHEET.innerHTML = `${CharacterExp} / ${Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].ExpNeeded}`;
@@ -1235,6 +1249,6 @@ N O T I F I C A T I O N  C O D E
 ###########################*/
 
 notification.addEventListener("click", function () {
-    notification.innerHTML = "";
+    notificationText.innerHTML = "";
     notification.classList.add("unDisplay");
 })

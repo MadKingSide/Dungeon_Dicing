@@ -14,7 +14,8 @@
 
         <div class="monsterSelector">
             <select id="monsterselect" class="monsterSelector__select" onchange="monsterselect(value)">
-                <option value="none" >Choose a monster</option>
+                <option value="none" selected disabled>Choose a monster</option>
+                <option value="multiple" >Multiple monster</option>
             </select>
             <button class="Spawn">Spawn Monster</button>
         </div>
@@ -77,6 +78,12 @@
         </div>
 
         <div class="notification unDisplay">
+            <div class="notification__card">
+                <div class="notification__text">
+
+                </div>
+                <h3 class="ClickToClose">Click anywhere to continue</h3>
+            </div>
         </div>
     </main>
     <script src="./MonsterNHeroes.js"></script>
