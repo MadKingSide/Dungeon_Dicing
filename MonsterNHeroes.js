@@ -48,14 +48,24 @@ let CharacterLevel;
 let CharacterExp;
 
 let CharacterHealth;
-let CharacterAttMulti;
+let CharacterAttMulti = 1;
 let CharacterArmor;
 let CharacterShield;
+let CurrentAttack = 0; // changes depending on the attack selected
+
+let isAlive = true; // bool to see the condistion of the player (it more so the alert stops popping out)
 
 let GainedExp = 0; //to calculate the exp won during a fight
 
 let InventoryLoot = []; //will calculate and store how many and what items you have in your inventory
 let LootDropArray = [];
+
+let turn = "player"; // to decide if its the turn of the player or the monster
+let MonsterTurnDone = 0; // count how many monster played
+let turnVerificator; //to verify if every enemy played their turn
+let chosenAttack; //  which attack the monster will do
+
+let critRate = 100; // chance to crit (starting from 100 for easier code i hope)
 
 /*###########################
 #############################
@@ -537,7 +547,6 @@ const monsters = {
     },
 }
 
-
 const enemyCreator = Object.keys(monsters);
 
 
@@ -594,9 +603,12 @@ document.querySelector(".Spawn").addEventListener("click", function () {
 
 
 class Monster {
+
+    #Attack;
+
     constructor(Health, Attack, MonsterNum) {
         this.Health = Health;
-        this.Attack = Attack;
+        this.#Attack = monsters[enemyCreator[enemyCreator.indexOf(MonsterNum)]].Attack;
         this.MonsterNum = MonsterNum;
 
         this.CreateCard()
@@ -607,10 +619,10 @@ class Monster {
             this.selectedMonster(this.MonsterNum);
         }
 
+        this.interval = setInterval(this.AttackPlayer.bind(this), 1000)
     }
 
     CreateCard() {
-
         this.card = document.createElement("div");
         this.card.classList.add("enemyCard");
 
@@ -628,8 +640,6 @@ class Monster {
         this.card.addEventListener("click", () => {
             this.GetHit();
         });
-
-
     }
 
     /*RandomMonster() {
@@ -646,20 +656,24 @@ class Monster {
     }*/
 
     selectedMonster(monster) {
-        console.log(monster);
         this.name.innerHTML = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Name;
 
-        this.healthCount.innerHTML = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Health;
+        this.healthCount.innerHTML = `Health : ${monsters[enemyCreator[enemyCreator.indexOf(monster)]].Health}`;
         this.Health = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Health;
 
-        this.attack.innerHTML = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Attack;
+        this.attack.innerHTML = `Attack : ${monsters[enemyCreator[enemyCreator.indexOf(monster)]].Attack}`;
 
         enemiesSide.appendChild(this.card);
     }
 
     GetHit() {
-        this.Health--;
-        this.healthCount.innerHTML = this.Health;
+        if (Math.floor(Math.random() * 100) + 1 == critRate) { //see if its a critical hit
+            console.log("pog")
+            this.Health -= (CurrentAttack * CharacterAttMulti) * 2;
+        } else {
+            this.Health -= (CurrentAttack * CharacterAttMulti);
+        }
+        this.healthCount.innerHTML = `Health : ${this.Health}`;
 
         if (this.Health <= 0) {
             this.card.remove();
@@ -669,7 +683,17 @@ class Monster {
 
         //console.log(this.Health);
     }
+
+    AttackPlayer() {
+        if (turn == "monster") {
+            //let chosenAttack = monsters[enemyCreator[enemyCreator.indexOf(this.MonsterNum)]].Attack;
+            CharacterHealth -= this.#Attack;
+            document.querySelector(".healthBar").innerHTML = CharacterHealth;
+            MonsterTurnDone++;
+        }
+    }
 }
+
 
 function MonsterKilled(MonsterKilled) {
 
@@ -1217,9 +1241,9 @@ confirmCreation.addEventListener("click", function () {
     CharacterArmor = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].Armor;
     document.querySelector(".Armor").innerHTML = CharacterArmor;
 
-    let chartest = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Attacks;
+    let CharAttackList = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Attacks;
 
-    chartest.forEach(element => {
+    CharAttackList.forEach(element => {
         new Attacks(element);
 
     });
@@ -1237,7 +1261,6 @@ for (let i = 0; i < PlayerHandler.length; i++) {
 
     Characterselector.appendChild(CharacterOption);
 }
-
 
 class Attacks {
     constructor(Attack) {
@@ -1270,9 +1293,20 @@ class Attacks {
     }
 
     ActivateCard() {
-
+        CurrentAttack = this.Damage;
+        console.log(this.Damage);
     }
 }
+
+setInterval(function () {
+    if (CharacterHealth <= 0) {
+        location.reload()
+        if (isAlive) {
+            window.alert("ded")
+            isAlive = false;
+        }
+    }
+}, 100);
 
 /*###########################
 #############################
@@ -1305,3 +1339,25 @@ notification.addEventListener("click", function () {
     notificationText.innerHTML = "";
     notification.classList.add("unDisplay");
 })
+
+
+/*###########################
+#############################
+T U R N  C O D E
+#############################
+###########################*/
+
+setInterval(function () {
+    turnVerificator = enemiesSide.childElementCount;
+    //console.log(turnVerificator);
+
+    if (MonsterTurnDone >= turnVerificator) {
+        MonsterTurnDone = 0;
+        turn = "player";
+    }
+    
+}, 100);
+
+function EndTurn() {
+    turn = "monster";
+}
