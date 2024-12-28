@@ -50,7 +50,7 @@
         }
     }
 
-    &__items {
+    &__items, &__attacks {
         width: 20%;
         height: 250px;
         padding: 10px;
@@ -78,6 +78,11 @@
 
         &__attacks {
             background-color: blue;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            height: fit-content;
+            min-height: 100%;
         }
     }
 }

@@ -784,6 +784,16 @@ const Heros = {
     InfantryMen: {
         Name: "InfantryMen",
         Attack: 5,
+        Attacks: [
+            Slash = {
+                Name: "Slash",
+                Damage: 3,
+            },
+            Stab = {
+                Name: "Stab",
+                Damage: 4,
+            },
+        ],
         Levels: [
             lvl1 = {
                 Level: 1,
@@ -1206,6 +1216,14 @@ confirmCreation.addEventListener("click", function () {
 
     CharacterArmor = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].Armor;
     document.querySelector(".Armor").innerHTML = CharacterArmor;
+
+    let chartest = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Attacks;
+
+    chartest.forEach(element => {
+        new Attacks(element);
+
+    });
+    //console.log(Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Attacks[0].Damage);
 })
 
 
@@ -1220,6 +1238,41 @@ for (let i = 0; i < PlayerHandler.length; i++) {
     Characterselector.appendChild(CharacterOption);
 }
 
+
+class Attacks {
+    constructor(Attack) {
+        this.Attack = Attack;
+        this.Name = Attack.Name;
+        this.Damage = Attack.Damage;
+
+        this.CreateCard()
+    }
+
+    CreateCard() {
+
+        this.card = document.createElement("div");
+        this.card.classList.add("bag__attacks");
+
+        this.namePara = document.createElement("h3");
+        this.namePara.innerHTML = this.Name;
+
+        this.attackPara = document.createElement("p");
+        this.attackPara.innerHTML = this.Damage;
+
+        this.card.appendChild(this.namePara);
+        this.card.appendChild(this.attackPara);
+
+        bagAttacksContainer.appendChild(this.card);
+
+        this.card.addEventListener("click", () => {
+            this.ActivateCard()
+        });
+    }
+
+    ActivateCard() {
+
+    }
+}
 
 /*###########################
 #############################
