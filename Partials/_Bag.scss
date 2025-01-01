@@ -12,7 +12,7 @@
         display: flex;
         justify-content: space-around;
         position: sticky;
-        top: 0;
+        top: 20px;
         background-color: red;
         width: 100%;
         height: 15%;
@@ -85,4 +85,21 @@
             min-height: 100%;
         }
     }
+}
+
+.bagheader {
+    position: sticky;
+    top: 0;
+    height: 20px;
+    background-color: yellowgreen;
+    cursor: move;
+    text-align: center;
+}
+
+.activated {
+    background-color: red;
+}
+
+.deactivated {
+    background-color: grey;
 }

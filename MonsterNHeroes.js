@@ -52,6 +52,9 @@ let CharacterAttMulti = 1;
 let CharacterArmor;
 let CharacterShield;
 let CurrentAttack = 0; // changes depending on the attack selected
+let CurrentHeal = 0; // changes depending on the attack selected
+let currentCards = document.querySelectorAll(".bag__attacks"); // current attack list
+let selectedCard;
 
 let isAlive = true; // bool to see the condistion of the player (it more so the alert stops popping out)
 
@@ -62,8 +65,9 @@ let LootDropArray = [];
 
 let turn = "player"; // to decide if its the turn of the player or the monster
 let MonsterTurnDone = 0; // count how many monster played
-let turnVerificator; //to verify if every enemy played their turn
-let chosenAttack; //  which attack the monster will do
+let turnVerificator; // to verify if every enemy played their turn
+let chosenAttack; // which attack the monster will do
+let timeLeft = 6; // the time the player has to play based on the card they play
 
 let critRate = 100; // chance to crit (starting from 100 for easier code i hope)
 
@@ -667,21 +671,39 @@ class Monster {
     }
 
     GetHit() {
-        if (Math.floor(Math.random() * 100) + 1 == critRate) { //see if its a critical hit
-            console.log("pog")
-            this.Health -= (CurrentAttack * CharacterAttMulti) * 2;
-        } else {
-            this.Health -= (CurrentAttack * CharacterAttMulti);
+        if (selectedCard != undefined) {
+
+            
+
+
+            if (CurrentAttack != 0 && CurrentHeal !=0) {
+                this.Health -= CritCalculator();
+
+                CharacterHealth += CurrentHeal;
+                document.querySelector(".healthBar").innerHTML = CharacterHealth;
+            } else if (CurrentAttack != 0 && CurrentHeal ==0) {
+                this.Health -= CritCalculator();
+            } else if (CurrentAttack == 0 && CurrentHeal !=0) {
+                this.Health += CurrentHeal;
+            }
+
+            selectedCard.classList.remove("activated");
+            selectedCard.classList.add("deactivated"); 
+            CurrentAttack = 0; //resets attack
+            selectedCard = undefined; //remove card from variable
+
+            this.healthCount.innerHTML = `Health : ${this.Health}`;
+
+
+            if (this.Health <= 0) {
+                this.card.remove();
+
+                MonsterKilled(this.MonsterNum);
+            }
+
+            //console.log(this.Health);
         }
-        this.healthCount.innerHTML = `Health : ${this.Health}`;
 
-        if (this.Health <= 0) {
-            this.card.remove();
-
-            MonsterKilled(this.MonsterNum);
-        }
-
-        //console.log(this.Health);
     }
 
     AttackPlayer() {
@@ -692,6 +714,17 @@ class Monster {
             MonsterTurnDone++;
         }
     }
+}
+
+function CritCalculator() {
+    let damage = 0;
+    if (Math.floor(Math.random() * 100) + 1 == critRate) { //see if its a critical hit
+        console.log("pog")
+        damage = (CurrentAttack * CharacterAttMulti) * 2;
+    } else {
+        damage = (CurrentAttack * CharacterAttMulti);
+    }
+    return damage
 }
 
 
@@ -785,9 +818,13 @@ function FightWon(lootarray, exp) {
 
     CharacterExp += exp;
 
+
     //resets variables for next encounter
     GainedExp = 0;
     LootDropArray = [];
+
+    CharacterHealth = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].Health;
+    document.querySelector(".healthBar").innerHTML = CharacterHealth;
 
     notification.classList.remove("unDisplay");
 
@@ -807,15 +844,52 @@ P L A Y E R  C O D E
 const Heros = {
     InfantryMen: {
         Name: "InfantryMen",
-        Attack: 5,
         Attacks: [
-            Slash = {
-                Name: "Slash",
+            Kick = {
+                Name: "Kick",
+                Damage: 2,
+                Time: 1.5,
+            },
+            Bandage = {
+                Name: "Bandage",
+                Heal: 8,
+                Time: 3,
+            },
+            Bandage = {
+                Name: "Bandage",
+                Heal: 8,
+                Time: 3,
+            },
+            Cleave = {
+                Name: "Cleave",
+                Damage: 4,
+                Time: 2.5,
+            },
+            LargeCleave = {
+                Name: "Large Cleave",
+                Damage: 7,
+                Time: 3,
+            },
+            StaffHit = {
+                Name: "Staff Hit",
                 Damage: 3,
+                Time: 1.5,
             },
             Stab = {
                 Name: "Stab",
-                Damage: 4,
+                Damage: 3,
+                Time: 2,
+            },
+            PiercingStab = {
+                Name: "Piercing Stab",
+                Damage: 3,
+                Time: 3,
+            },
+            BloodFrenzy = {
+                Name: "Blood Frenzy",
+                Damage: 7,
+                Heal: 8,
+                Time: 5,
             },
         ],
         Levels: [
@@ -1267,6 +1341,8 @@ class Attacks {
         this.Attack = Attack;
         this.Name = Attack.Name;
         this.Damage = Attack.Damage;
+        this.Heal = Attack.Heal;
+        this.Time = Attack.Time;
 
         this.CreateCard()
     }
@@ -1277,24 +1353,82 @@ class Attacks {
         this.card.classList.add("bag__attacks");
 
         this.namePara = document.createElement("h3");
-        this.namePara.innerHTML = this.Name;
-
-        this.attackPara = document.createElement("p");
-        this.attackPara.innerHTML = this.Damage;
-
+        this.namePara.innerHTML = `${this.Name}`;
         this.card.appendChild(this.namePara);
-        this.card.appendChild(this.attackPara);
+
+        if (this.Damage != undefined && this.Heal != undefined) {
+
+            this.attackPara = document.createElement("p");
+            this.attackPara.innerHTML = `Damage : ${this.Damage}`;
+            this.card.appendChild(this.attackPara);
+
+            this.healPara = document.createElement("p");
+            this.healPara.innerHTML = `Heal : ${this.Heal}`;
+            this.card.appendChild(this.healPara);
+        } else if (this.Damage != undefined) {
+            this.attackPara = document.createElement("p");
+            this.attackPara.innerHTML = `Damage : ${this.Damage}`;
+            this.card.appendChild(this.attackPara);
+        } else if (this.Heal != undefined) {
+            this.healPara = document.createElement("p");
+            this.healPara.innerHTML = `Heal : ${this.Heal}`;
+            this.card.appendChild(this.healPara);
+
+            this.card.addEventListener("dblclick",  () => {
+                CharacterHealth += CurrentHeal;
+                document.querySelector(".healthBar").innerHTML = CharacterHealth;
+                this.card.classList.add("deactivated");
+            })
+        }
+
+        
+
+        this.timePara = document.createElement("p");
+        this.timePara.innerHTML = `Time : ${this.Time}`;
+        this.card.appendChild(this.timePara);
+        
+
+
 
         bagAttacksContainer.appendChild(this.card);
 
         this.card.addEventListener("click", () => {
             this.ActivateCard()
         });
+
+        currentCards = document.querySelectorAll(".bag__attacks");
     }
 
     ActivateCard() {
-        CurrentAttack = this.Damage;
-        console.log(this.Damage);
+        if (!this.card.classList.contains("deactivated")) {
+            currentCards = document.querySelectorAll(".bag__attacks");
+            console.log(currentCards)
+
+            for (let i = 0; i < currentCards.length; i++) {
+                currentCards[i].classList.remove("activated");
+            }
+
+            if (this.Damage != undefined) {
+                CurrentAttack = this.Damage;
+                console.log(this.Damage); 
+            } else {
+                CurrentAttack = 0;
+            }
+
+            if (this.Heal != undefined) {
+                CurrentHeal = this.Heal;
+                console.log(CurrentHeal);  
+            } else {
+                CurrentHeal = 0;
+            }
+
+
+            selectedCard = this.card;
+            console.log(selectedCard)
+            this.card.classList.add("activated");
+
+        }
+
     }
 }
 
@@ -1315,7 +1449,15 @@ B A G  C O D E
 ###########################*/
 
 
-bagOpenButton.addEventListener("click", function() {bag.classList.remove("unDisplay")})
+bagOpenButton.addEventListener("click", function() {
+
+    bag.style.top = "50vh";
+    bag.style.left = "50vw";
+    bag.style.transform = "translate(-50%, -50%)";
+
+    bag.classList.remove("unDisplay")
+})
+
 bagCloseButton.addEventListener("click", function() {bag.classList.add("unDisplay")})
 
 
@@ -1354,6 +1496,10 @@ setInterval(function () {
     if (MonsterTurnDone >= turnVerificator) {
         MonsterTurnDone = 0;
         turn = "player";
+        for (let i = 0; i < currentCards.length; i++) {
+            currentCards[i].classList.remove("deactivated");
+            currentCards[i].classList.remove("activated");
+        }
     }
     
 }, 100);
