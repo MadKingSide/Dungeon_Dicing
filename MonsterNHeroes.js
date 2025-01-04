@@ -695,7 +695,7 @@ class Monster {
             }
 
             timeLeft -= selectedCardTime;
-            timeleftpara.innerHTML = ` time left for the player : ${timeLeft}`;
+            timeleftpara.innerHTML = `Time : ${timeLeft}`;
 
             selectedCard.classList.remove("activated");
             selectedCard.classList.add("deactivated"); 
@@ -1523,7 +1523,10 @@ setInterval(function () {
         }
 
         timeLeft = timeFallback;
-        timeleftpara.innerHTML = ` time left for the player : ${timeLeft}`;
+        timeleftpara.innerHTML = `Time : ${timeLeft}`;
+
+        fightingGround.classList.add("unDisplay");
+        mapContainer.classList.remove("unDisplay");
     }
     
 }, 100);
@@ -1532,4 +1535,4 @@ function EndTurn() {
     turn = "monster";
 }
 
-timeleftpara.innerHTML = ` time left for the player : ${timeLeft}`;
+timeleftpara.innerHTML = `Time : ${timeLeft}`;

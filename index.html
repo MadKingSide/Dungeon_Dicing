@@ -8,7 +8,7 @@
 </head>
 <body>
     <main>
-        
+
         <div class="map">
         <div class="monsterSelector">
             <select id="monsterselect" class="monsterSelector__select" onchange="monsterselect(value)">
@@ -35,49 +35,6 @@
             </div>
 
             <Button onclick="EndTurn()">End Turn</Button>
-
-            <div class="player">
-                <div class="Character">
-                    <div class="Character__info">
-                        <img src="./Icon40_scaled_8x_pngcrushed.png" alt="" class="Character__portrait">
-                        <h3 class="Name">Name</h3>
-                        <h3 class="Class">Class</h3>
-                        <h3 class="Level">Level</h3>
-                        <h3 class="Exp">Exp</h3>
-                    </div>
-                    <div class="Character__stats">
-    
-                        <h3 class="healthBar"></h3>
-    
-                        <h3 class="AttMulti"></h3>
-    
-                        <h3 class="Armor"></h3>
-    
-                        <div>
-                            <h3>Shield : </h3>
-                            <h3 class="Shield"></h3>
-                        </div>
-                        <h3 class="timeLeft"></h3>
-                        <div>
-                            <button class="Character__bag__button"> Open Bag</button>
-                        </div>
-                    </div>
-                    <div class="Character__Equipment">
-                        <h3>pain</h3>
-                    </div>
-                </div>
-    
-                <div class="CharacterCreator">
-                    <div class="CharacterCreator__blur"></div>
-                    <div class="CharacterCreator__menu">
-                        <Select id="Characterselect" class="CharacterCreator__select">
-                            <option value="none">Choose a Hero</option>
-                        </Select>
-                        <input type="text" maxlength="15" class="CharacterCreator__name" placeholder="Choose a name">
-                        <button class="CharacterCreator__confirm">Confirm</button> 
-                    </div>
-                </div>
-            </div>
     
             <div class="bag unDisplay" id="bag">
                 <div class="bagheader">You can move the bag</div>
@@ -90,6 +47,49 @@
                 <div class="bag__container bag__container__attacks unDisplay"></div>
             </div>
     
+        </div>
+
+        <div class="player">
+            <div class="Character">
+                <div class="Character__info">
+                    <img src="./Icon40_scaled_8x_pngcrushed.png" alt="" class="Character__portrait">
+                    <h3 class="Name">Name</h3>
+                    <h3 class="Class">Class</h3>
+                    <h3 class="Level">Level</h3>
+                    <h3 class="Exp">Exp</h3>
+                </div>
+                <div class="Character__stats">
+
+                    <h3 class="healthBar"></h3>
+
+                    <h3 class="AttMulti"></h3>
+
+                    <h3 class="Armor"></h3>
+
+                    <div>
+                        <h3>Shield : </h3>
+                        <h3 class="Shield"></h3>
+                    </div>
+                    <h3 class="timeLeft"></h3>
+                    <div>
+                        <button class="Character__bag__button"> Open Bag</button>
+                    </div>
+                </div>
+                <div class="Character__Equipment">
+                    <h3>pain</h3>
+                </div>
+            </div>
+
+            <div class="CharacterCreator">
+                <div class="CharacterCreator__blur"></div>
+                <div class="CharacterCreator__menu">
+                    <Select id="Characterselect" class="CharacterCreator__select">
+                        <option value="none">Choose a Hero</option>
+                    </Select>
+                    <input type="text" maxlength="15" class="CharacterCreator__name" placeholder="Choose a name">
+                    <button class="CharacterCreator__confirm">Confirm</button> 
+                </div>
+            </div>
         </div>
 
     </main>
