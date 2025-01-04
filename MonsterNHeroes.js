@@ -4,6 +4,9 @@ V A R I A B L E S
 #############################
 ###########################*/
 
+let mapContainer = document.querySelector(".map"); //allow the player to choose where to go
+let fightingGround = document.querySelector(".figthing"); //appears when in fight
+
 //variable to get items in index.html
 const enemiesSide = document.querySelector(".enemies"); //where the enemies card are
 let monsterselector = document.querySelector("#monsterselect"); //the select to choose a monster
@@ -50,11 +53,12 @@ let CharacterExp;
 let CharacterHealth;
 let CharacterAttMulti = 1;
 let CharacterArmor;
-let CharacterShield;
+let CharacterShield = 0;
 let CurrentAttack = 0; // changes depending on the attack selected
 let CurrentHeal = 0; // changes depending on the attack selected
 let currentCards = document.querySelectorAll(".bag__attacks"); // current attack list
 let selectedCard;
+let selectedCardTime = 0;
 
 let isAlive = true; // bool to see the condistion of the player (it more so the alert stops popping out)
 
@@ -67,7 +71,10 @@ let turn = "player"; // to decide if its the turn of the player or the monster
 let MonsterTurnDone = 0; // count how many monster played
 let turnVerificator; // to verify if every enemy played their turn
 let chosenAttack; // which attack the monster will do
+
+let timeleftpara = document.querySelector(".timeLeft"); // where to write the time left
 let timeLeft = 6; // the time the player has to play based on the card they play
+let timeFallback = 6;
 
 let critRate = 100; // chance to crit (starting from 100 for easier code i hope)
 
@@ -584,24 +591,27 @@ function monsterselect(monster) {
 
 document.querySelector(".Spawn").addEventListener("click", function () {
 
+    fightingGround.classList.remove("unDisplay");
+    mapContainer.classList.add("unDisplay");
+
     let RandomMonster = "nothing";
     //console.log(monsterselected);
     if (monsterselected == "none") {
 
         RandomMonster = enemyCreator[Math.floor((Math.random() * enemyCreator.length) + areaNumber)];
-        new Monster(0, 0, RandomMonster);
+        new Monster(0, RandomMonster);
 
     } else if (monsterselected == "multiple") {
         RandomMonster = [];
 
         for (let i = 0; i < Math.floor((Math.floor(Math.random() * 3) + 2)); i++) { //minimum of 2 monsters
             RandomMonster = enemyCreator[Math.floor((Math.random() * enemyCreator.length) + areaNumber)];
-            new Monster(0, 0, RandomMonster);
+            new Monster(0, RandomMonster);
         }
 
     } else {
         RandomMonster = monsterselected;
-        new Monster(0, 0, RandomMonster);
+        new Monster(0, RandomMonster);
     }
 })
 
@@ -610,7 +620,7 @@ class Monster {
 
     #Attack;
 
-    constructor(Health, Attack, MonsterNum) {
+    constructor(Health, MonsterNum) {
         this.Health = Health;
         this.#Attack = monsters[enemyCreator[enemyCreator.indexOf(MonsterNum)]].Attack;
         this.MonsterNum = MonsterNum;
@@ -673,19 +683,19 @@ class Monster {
     GetHit() {
         if (selectedCard != undefined) {
 
-            
-
-
             if (CurrentAttack != 0 && CurrentHeal !=0) {
                 this.Health -= CritCalculator();
 
                 CharacterHealth += CurrentHeal;
-                document.querySelector(".healthBar").innerHTML = CharacterHealth;
+                document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;;
             } else if (CurrentAttack != 0 && CurrentHeal ==0) {
                 this.Health -= CritCalculator();
             } else if (CurrentAttack == 0 && CurrentHeal !=0) {
                 this.Health += CurrentHeal;
             }
+
+            timeLeft -= selectedCardTime;
+            timeleftpara.innerHTML = ` time left for the player : ${timeLeft}`;
 
             selectedCard.classList.remove("activated");
             selectedCard.classList.add("deactivated"); 
@@ -709,8 +719,8 @@ class Monster {
     AttackPlayer() {
         if (turn == "monster") {
             //let chosenAttack = monsters[enemyCreator[enemyCreator.indexOf(this.MonsterNum)]].Attack;
-            CharacterHealth -= this.#Attack;
-            document.querySelector(".healthBar").innerHTML = CharacterHealth;
+            CharacterHealth -= this.#Attack - CharacterArmor;
+            document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
             MonsterTurnDone++;
         }
     }
@@ -719,7 +729,7 @@ class Monster {
 function CritCalculator() {
     let damage = 0;
     if (Math.floor(Math.random() * 100) + 1 == critRate) { //see if its a critical hit
-        console.log("pog")
+        console.log("Crit")
         damage = (CurrentAttack * CharacterAttMulti) * 2;
     } else {
         damage = (CurrentAttack * CharacterAttMulti);
@@ -749,7 +759,7 @@ function MonsterKilled(MonsterKilled) {
         }
     }
     
-    console.log(LootDropArray)
+    //console.log(LootDropArray)
 
     if (enemiesSide.childElementCount <= 0) {
         FightWon(LootDropArray, GainedExp);
@@ -763,15 +773,15 @@ function LevelUp() {
     CharacterLevelSHEET.innerHTML = ` Level : ${CharacterLevel}`;
 
     CharacterHealth = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].Health;
-    document.querySelector(".healthBar").innerHTML = CharacterHealth;
+    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
     
     CharacterExpSHEET.innerHTML = `${CharacterExp} / ${Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].ExpNeeded}`;
 
     CharacterAttMulti = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].AttMulti;
-    document.querySelector(".AttMulti").innerHTML = CharacterAttMulti;
+    document.querySelector(".AttMulti").innerHTML = `Attack Multiplier : ${CharacterAttMulti}`;;
 
     CharacterArmor = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].Armor;
-    document.querySelector(".Armor").innerHTML = CharacterArmor;
+    document.querySelector(".Armor").innerHTML = `Armor : ${CharacterArmor}`;;
 }
 
 function FightWon(lootarray, exp) {
@@ -814,6 +824,7 @@ function FightWon(lootarray, exp) {
             InventoryLoot[LootTable[LootTable.indexOf(`${element.ID}`)]].Count++;
             document.querySelector(`.${element.ID}`).innerHTML = `X ${InventoryLoot[LootTable[LootTable.indexOf(`${element.ID}`)]].Count}`;
         }
+        //console.log(InventoryLoot);
     });
 
     CharacterExp += exp;
@@ -824,7 +835,7 @@ function FightWon(lootarray, exp) {
     LootDropArray = [];
 
     CharacterHealth = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].Health;
-    document.querySelector(".healthBar").innerHTML = CharacterHealth;
+    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
 
     notification.classList.remove("unDisplay");
 
@@ -1307,13 +1318,13 @@ confirmCreation.addEventListener("click", function () {
     CharacterExpSHEET.innerHTML = `${CharacterExp} / ${Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].ExpNeeded}`;
 
     CharacterHealth = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].Health;
-    document.querySelector(".healthBar").innerHTML = CharacterHealth;
+    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
 
     CharacterAttMulti = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].AttMulti;
-    document.querySelector(".AttMulti").innerHTML = CharacterAttMulti;
+    document.querySelector(".AttMulti").innerHTML = `Attack Multiplier : ${CharacterAttMulti}`;
 
     CharacterArmor = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].Armor;
-    document.querySelector(".Armor").innerHTML = CharacterArmor;
+    document.querySelector(".Armor").innerHTML = `Armor : ${CharacterArmor}`;;
 
     let CharAttackList = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Attacks;
 
@@ -1345,6 +1356,12 @@ class Attacks {
         this.Time = Attack.Time;
 
         this.CreateCard()
+
+        setInterval( () => {
+            if (this.Time > timeLeft) {
+                this.card.classList.add("deactivated");
+            }
+        }, 100);
     }
 
     CreateCard() {
@@ -1376,7 +1393,7 @@ class Attacks {
 
             this.card.addEventListener("dblclick",  () => {
                 CharacterHealth += CurrentHeal;
-                document.querySelector(".healthBar").innerHTML = CharacterHealth;
+                document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
                 this.card.classList.add("deactivated");
             })
         }
@@ -1400,9 +1417,9 @@ class Attacks {
     }
 
     ActivateCard() {
-        if (!this.card.classList.contains("deactivated")) {
+        if (!this.card.classList.contains("deactivated") && this.Time <= timeLeft) {
             currentCards = document.querySelectorAll(".bag__attacks");
-            console.log(currentCards)
+            //console.log(currentCards)
 
             for (let i = 0; i < currentCards.length; i++) {
                 currentCards[i].classList.remove("activated");
@@ -1410,21 +1427,25 @@ class Attacks {
 
             if (this.Damage != undefined) {
                 CurrentAttack = this.Damage;
-                console.log(this.Damage); 
+                //console.log(this.Damage); 
             } else {
                 CurrentAttack = 0;
             }
 
             if (this.Heal != undefined) {
                 CurrentHeal = this.Heal;
-                console.log(CurrentHeal);  
+                //console.log(CurrentHeal);  
             } else {
                 CurrentHeal = 0;
             }
 
 
             selectedCard = this.card;
-            console.log(selectedCard)
+            //console.log(selectedCard)
+
+            selectedCardTime = this.Time;
+            //console.log(selectedCardTime);
+
             this.card.classList.add("activated");
 
         }
@@ -1500,6 +1521,9 @@ setInterval(function () {
             currentCards[i].classList.remove("deactivated");
             currentCards[i].classList.remove("activated");
         }
+
+        timeLeft = timeFallback;
+        timeleftpara.innerHTML = ` time left for the player : ${timeLeft}`;
     }
     
 }, 100);
@@ -1507,3 +1531,5 @@ setInterval(function () {
 function EndTurn() {
     turn = "monster";
 }
+
+timeleftpara.innerHTML = ` time left for the player : ${timeLeft}`;

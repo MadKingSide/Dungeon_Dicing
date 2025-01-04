@@ -8,80 +8,17 @@
 </head>
 <body>
     <main>
-        <div class="enemies">
-
-        </div>
-
+        
+        <div class="map">
         <div class="monsterSelector">
             <select id="monsterselect" class="monsterSelector__select" onchange="monsterselect(value)">
                 <option value="none" selected disabled>Choose a monster</option>
                 <option value="multiple" >Multiple monster</option>
             </select>
             <button class="Spawn">Spawn Monster</button>
-
-            <Button onclick="EndTurn()">End Turn</Button>
-
-            <h3 class="timeLeft"></h3>
         </div>
-
-        <div class="player">
-            <div class="Character">
-                <div class="Character__info">
-                    <img src="./Icon40_scaled_8x_pngcrushed.png" alt="" class="Character__portrait">
-                    <h3 class="Name">Name</h3>
-                    <h3 class="Class">Class</h3>
-                    <h3 class="Level">Level</h3>
-                    <h3 class="Exp">Exp</h3>
-                </div>
-                <div class="Character__stats">
-                    <div>
-                        <h3>Health : </h3>
-                        <h3 class="healthBar"></h3>
-                    </div>
-                    <div>
-                        <h3>Attack Multiplier : </h3>
-                        <h3 class="AttMulti"></h3>
-                    </div>
-                    <div>
-                        <h3>Armor : </h3>
-                        <h3 class="Armor"></h3>
-                    </div>
-                    <div>
-                        <h3>Shield : </h3>
-                        <h3 class="Shield"></h3>
-                    </div>
-                    <div>
-                        <button class="Character__bag__button"> Open Bag</button>
-                    </div>
-                </div>
-                <div class="Character__Equipment">
-                    <h3>pain</h3>
-                </div>
-            </div>
-
-            <div class="CharacterCreator">
-                <div class="CharacterCreator__blur"></div>
-                <div class="CharacterCreator__menu">
-                    <Select id="Characterselect" class="CharacterCreator__select">
-                        <option value="none">Choose a Hero</option>
-                    </Select>
-                    <input type="text" maxlength="15" class="CharacterCreator__name" placeholder="Choose a name">
-                    <button class="CharacterCreator__confirm">Confirm</button> 
-                </div>
-            </div>
         </div>
-
-        <div class="bag unDisplay" id="bag">
-            <div class="bagheader">You can move the bag</div>
-            <div class="bag__category">
-                <div class="bag__menu bag__menu__items"><h3>Items</h3></div>
-                <div class="bag__menu bag__menu__attacks"><h3>Attack Cards</h3></div>
-                <div class="bag__menu bag__menu__close"><h3>X</h3></div>  
-            </div>
-            <div class="bag__container bag__container__items"></div>
-            <div class="bag__container bag__container__attacks unDisplay"></div>
-        </div>
-
+        
         <div class="notification unDisplay">
             <div class="notification__card">
                 <div class="notification__text">
@@ -90,6 +27,71 @@
                 <h3 class="ClickToClose">Click anywhere to continue</h3>
             </div>
         </div>
+
+        <div class="figthing unDisplay">
+
+            <div class="enemies">
+
+            </div>
+
+            <Button onclick="EndTurn()">End Turn</Button>
+
+            <div class="player">
+                <div class="Character">
+                    <div class="Character__info">
+                        <img src="./Icon40_scaled_8x_pngcrushed.png" alt="" class="Character__portrait">
+                        <h3 class="Name">Name</h3>
+                        <h3 class="Class">Class</h3>
+                        <h3 class="Level">Level</h3>
+                        <h3 class="Exp">Exp</h3>
+                    </div>
+                    <div class="Character__stats">
+    
+                        <h3 class="healthBar"></h3>
+    
+                        <h3 class="AttMulti"></h3>
+    
+                        <h3 class="Armor"></h3>
+    
+                        <div>
+                            <h3>Shield : </h3>
+                            <h3 class="Shield"></h3>
+                        </div>
+                        <h3 class="timeLeft"></h3>
+                        <div>
+                            <button class="Character__bag__button"> Open Bag</button>
+                        </div>
+                    </div>
+                    <div class="Character__Equipment">
+                        <h3>pain</h3>
+                    </div>
+                </div>
+    
+                <div class="CharacterCreator">
+                    <div class="CharacterCreator__blur"></div>
+                    <div class="CharacterCreator__menu">
+                        <Select id="Characterselect" class="CharacterCreator__select">
+                            <option value="none">Choose a Hero</option>
+                        </Select>
+                        <input type="text" maxlength="15" class="CharacterCreator__name" placeholder="Choose a name">
+                        <button class="CharacterCreator__confirm">Confirm</button> 
+                    </div>
+                </div>
+            </div>
+    
+            <div class="bag unDisplay" id="bag">
+                <div class="bagheader">You can move the bag</div>
+                <div class="bag__category">
+                    <div class="bag__menu bag__menu__items"><h3>Items</h3></div>
+                    <div class="bag__menu bag__menu__attacks"><h3>Attack Cards</h3></div>
+                    <div class="bag__menu bag__menu__close"><h3>X</h3></div>  
+                </div>
+                <div class="bag__container bag__container__items"></div>
+                <div class="bag__container bag__container__attacks unDisplay"></div>
+            </div>
+    
+        </div>
+
     </main>
     <script src="./MonsterNHeroes.js"></script>
     <script src="./dragBag.js"></script>
