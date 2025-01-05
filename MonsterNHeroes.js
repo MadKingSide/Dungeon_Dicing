@@ -56,6 +56,7 @@ let CharacterArmor;
 let CharacterShield = 0;
 let CurrentAttack = 0; // changes depending on the attack selected
 let CurrentHeal = 0; // changes depending on the attack selected
+let CurrentShield = 0; // changes depending on the attack selected
 let currentCards = document.querySelectorAll(".bag__attacks"); // current attack list
 let selectedCard;
 let selectedCardTime = 0;
@@ -700,6 +701,8 @@ class Monster {
             selectedCard.classList.remove("activated");
             selectedCard.classList.add("deactivated"); 
             CurrentAttack = 0; //resets attack
+            CurrentHeal = 0; //resets heal
+
             selectedCard = undefined; //remove card from variable
 
             this.healthCount.innerHTML = `Health : ${this.Health}`;
@@ -839,6 +842,9 @@ function FightWon(lootarray, exp) {
 
     notification.classList.remove("unDisplay");
 
+    fightingGround.classList.add("unDisplay");
+    mapContainer.classList.remove("unDisplay");
+
     if (CharacterExp >= Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].ExpNeeded) {
         LevelUp();
     }
@@ -857,46 +863,55 @@ const Heros = {
         Name: "InfantryMen",
         Attacks: [
             Kick = {
+                Type: "D",
                 Name: "Kick",
                 Damage: 2,
                 Time: 1.5,
             },
             Bandage = {
+                Type: "H",
                 Name: "Bandage",
                 Heal: 8,
                 Time: 3,
             },
             Bandage = {
+                Type: "H",
                 Name: "Bandage",
                 Heal: 8,
                 Time: 3,
             },
             Cleave = {
+                Type: "D",
                 Name: "Cleave",
                 Damage: 4,
                 Time: 2.5,
             },
             LargeCleave = {
+                Type: "D",
                 Name: "Large Cleave",
                 Damage: 7,
                 Time: 3,
             },
             StaffHit = {
+                Type: "D",
                 Name: "Staff Hit",
                 Damage: 3,
                 Time: 1.5,
             },
             Stab = {
+                Type: "D",
                 Name: "Stab",
                 Damage: 3,
                 Time: 2,
             },
             PiercingStab = {
+                Type: "D",
                 Name: "Piercing Stab",
                 Damage: 3,
                 Time: 3,
             },
             BloodFrenzy = {
+                Type: "DH",
                 Name: "Blood Frenzy",
                 Damage: 7,
                 Heal: 8,
@@ -978,7 +993,57 @@ const Heros = {
     },
     Hunter: {
         Name: "Hunter",
-        Attack: 5,
+        Attacks: [
+            Kick = {
+                Type: "D",
+                Name: "Kick",
+                Damage: 2,
+                Time: 1.5,
+            },
+            HealingHerbs = {
+                Type: "H",
+                Name: "Healing Herbs",
+                Heal: 15,
+                Time: 4,
+            },
+            HealingHerbs = {
+                Type: "H",
+                Name: "Healing Herbs",
+                Heal: 15,
+                Time: 4,
+            },
+            Butcher = {
+                Type: "D",
+                Name: "Butcher",
+                Damage: 3,
+                Time: 2,
+            },
+            FreshMeat = {
+                Type: "DH",
+                Name: "Fresh Meat",
+                Damage: 5,
+                Heal: 5,
+                Time: 2,
+            },
+            Arrow = {
+                Type: "D",
+                Name: "Arrow",
+                Damage: 4,
+                Time: 2,
+            },
+            PiercingArrow = {
+                Type: "D",
+                Name: "Piercing Arrow",
+                Damage: 5,
+                Time: 2.5,
+            },
+            DoubleShot = {
+                Type: "D",
+                Name: "Double Shot",
+                Damage: 8,
+                Time: 4,
+            },
+        ],
         Levels: [
             lvl1 = {
                 Level: 1,
@@ -1054,7 +1119,28 @@ const Heros = {
     },
     Paladin: {
         Name: "Paladin",
-        Attack: 5,
+        Attacks: [
+            Kick = {
+                Type: "D",
+                Name: "Kick",
+                Damage: 2,
+                Time: 1.5,
+            },
+            Prayer = {
+                Type: "HS",
+                Name: "Prayer",
+                Heal: 10,
+                Shield: 10,
+                Time: 4,
+            },
+            ShieldUp = {
+                Type: "S",
+                Name: "Shield Up",
+                Shield: 5,
+                Time: 1.5,
+            },
+
+        ],
         Levels: [
             lvl1 = {
                 Level: 1,
@@ -1324,7 +1410,9 @@ confirmCreation.addEventListener("click", function () {
     document.querySelector(".AttMulti").innerHTML = `Attack Multiplier : ${CharacterAttMulti}`;
 
     CharacterArmor = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].Armor;
-    document.querySelector(".Armor").innerHTML = `Armor : ${CharacterArmor}`;;
+    document.querySelector(".Armor").innerHTML = `Armor : ${CharacterArmor}`;
+
+    document.querySelector(".Shield").innerHTML = `Shield : ${CharacterShield}`;
 
     let CharAttackList = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Attacks;
 
@@ -1350,10 +1438,12 @@ for (let i = 0; i < PlayerHandler.length; i++) {
 class Attacks {
     constructor(Attack) {
         this.Attack = Attack;
+        this.Type = Attack.Type;
         this.Name = Attack.Name;
         this.Damage = Attack.Damage;
         this.Heal = Attack.Heal;
         this.Time = Attack.Time;
+        this.Shield = Attack.Shield;
 
         this.CreateCard()
 
@@ -1373,7 +1463,7 @@ class Attacks {
         this.namePara.innerHTML = `${this.Name}`;
         this.card.appendChild(this.namePara);
 
-        if (this.Damage != undefined && this.Heal != undefined) {
+        if (this.Type == "DH") {
 
             this.attackPara = document.createElement("p");
             this.attackPara.innerHTML = `Damage : ${this.Damage}`;
@@ -1382,11 +1472,41 @@ class Attacks {
             this.healPara = document.createElement("p");
             this.healPara.innerHTML = `Heal : ${this.Heal}`;
             this.card.appendChild(this.healPara);
-        } else if (this.Damage != undefined) {
+        }
+
+        if (this.Type == "HS") {
+
+            this.healPara = document.createElement("p");
+            this.healPara.innerHTML = `Heal : ${this.Heal}`;
+            this.card.appendChild(this.healPara);
+
+            this.shieldPara = document.createElement("p");
+            this.shieldPara.innerHTML = `Shield : ${this.Shield}`;
+            this.card.appendChild(this.shieldPara);
+
+            this.card.addEventListener("dblclick",  () => {
+                CharacterHealth += CurrentHeal;
+                document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
+
+                CharacterShield += CurrentShield;
+                document.querySelector(".Shield").innerHTML = `Shield : ${CharacterShield}`;
+
+                this.card.classList.add("deactivated");
+
+                timeLeft -= selectedCardTime;
+                timeleftpara.innerHTML = `Time : ${timeLeft}`;
+                CurrentHeal = 0;
+                CurrentShield = 0;
+            })
+        }
+        
+        if (this.Type == "D") {
             this.attackPara = document.createElement("p");
             this.attackPara.innerHTML = `Damage : ${this.Damage}`;
             this.card.appendChild(this.attackPara);
-        } else if (this.Heal != undefined) {
+        }
+        
+        if (this.Type == "H") {
             this.healPara = document.createElement("p");
             this.healPara.innerHTML = `Heal : ${this.Heal}`;
             this.card.appendChild(this.healPara);
@@ -1395,6 +1515,28 @@ class Attacks {
                 CharacterHealth += CurrentHeal;
                 document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
                 this.card.classList.add("deactivated");
+
+                timeLeft -= selectedCardTime;
+                timeleftpara.innerHTML = `Time : ${timeLeft}`;
+                CurrentHeal = 0;
+                
+            })
+        }
+
+        if (this.Type == "S") {
+            this.shieldPara = document.createElement("p");
+            this.shieldPara.innerHTML = `Shield : ${this.Shield}`;
+            this.card.appendChild(this.shieldPara);
+
+            this.card.addEventListener("dblclick",  () => {
+                CharacterShield += CurrentShield;
+                document.querySelector(".Shield").innerHTML = `Shield : ${CharacterShield}`;
+                this.card.classList.add("deactivated");
+
+                timeLeft -= selectedCardTime;
+                timeleftpara.innerHTML = `Time : ${timeLeft}`;
+                CurrentShield = 0;
+                
             })
         }
 
@@ -1437,6 +1579,13 @@ class Attacks {
                 //console.log(CurrentHeal);  
             } else {
                 CurrentHeal = 0;
+            }
+
+            if (this.Shield != undefined) {
+                CurrentShield = this.Shield;
+                //console.log(CurrentShield);  
+            } else {
+                CurrentShield = 0;
             }
 
 
@@ -1524,9 +1673,6 @@ setInterval(function () {
 
         timeLeft = timeFallback;
         timeleftpara.innerHTML = `Time : ${timeLeft}`;
-
-        fightingGround.classList.add("unDisplay");
-        mapContainer.classList.remove("unDisplay");
     }
     
 }, 100);
