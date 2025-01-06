@@ -57,6 +57,7 @@ let CharacterShield = 0;
 let CurrentAttack = 0; // changes depending on the attack selected
 let CurrentHeal = 0; // changes depending on the attack selected
 let CurrentShield = 0; // changes depending on the attack selected
+let CurrentType = 0; // changes depending on the attack selected
 let currentCards = document.querySelectorAll(".bag__attacks"); // current attack list
 let selectedCard;
 let selectedCardTime = 0;
@@ -684,14 +685,19 @@ class Monster {
     GetHit() {
         if (selectedCard != undefined) {
 
-            if (CurrentAttack != 0 && CurrentHeal !=0) {
+            if (CurrentType == "DH") {
                 this.Health -= CritCalculator();
 
                 CharacterHealth += CurrentHeal;
-                document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;;
-            } else if (CurrentAttack != 0 && CurrentHeal ==0) {
+                document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
+            } else if (CurrentType == "DS") {
                 this.Health -= CritCalculator();
-            } else if (CurrentAttack == 0 && CurrentHeal !=0) {
+
+                CharacterShield += CurrentShield;
+                document.querySelector(".Shield").innerHTML = `Shield : ${CharacterShield}`;
+            } else if (CurrentType == "D") {
+                this.Health -= CritCalculator();
+            } else if (CurrentType == "H") {
                 this.Health += CurrentHeal;
             }
 
@@ -1139,7 +1145,43 @@ const Heros = {
                 Shield: 5,
                 Time: 1.5,
             },
-
+            ShieldBash = {
+                Type: "DS",
+                Name: "Shield Bash",
+                Damage: 2,
+                Shield: 2,
+                Time: 1.5,
+            },
+            Stab = {
+                Type: "D",
+                Name: "Stab",
+                Damage: 5,
+                Time: 2,
+            },
+            Slash = {
+                Type: "D",
+                Name: "Slash",
+                Damage: 5,
+                Time: 2,
+            },
+            Gut = {
+                Type: "D",
+                Name: "Gut",
+                Damage: 7,
+                Time: 3.5,
+            },
+            Decapitate = {
+                Type: "D",
+                Name: "Decapitate",
+                Damage: 6,
+                Time: 3,
+            },
+            HolyPunishment = {
+                Type: "D",
+                Name: "Holy Punishment",
+                Damage: 10,
+                Time: 6,
+            },
         ],
         Levels: [
             lvl1 = {
@@ -1474,6 +1516,17 @@ class Attacks {
             this.card.appendChild(this.healPara);
         }
 
+        if (this.Type == "DS") {
+
+            this.attackPara = document.createElement("p");
+            this.attackPara.innerHTML = `Damage : ${this.Damage}`;
+            this.card.appendChild(this.attackPara);
+
+            this.shieldPara = document.createElement("p");
+            this.shieldPara.innerHTML = `Shield : ${this.Shield}`;
+            this.card.appendChild(this.shieldPara);
+        }
+
         if (this.Type == "HS") {
 
             this.healPara = document.createElement("p");
@@ -1497,6 +1550,8 @@ class Attacks {
                 timeleftpara.innerHTML = `Time : ${timeLeft}`;
                 CurrentHeal = 0;
                 CurrentShield = 0;
+
+                selectedCard = undefined; //remove card from variable
             })
         }
         
@@ -1519,7 +1574,8 @@ class Attacks {
                 timeLeft -= selectedCardTime;
                 timeleftpara.innerHTML = `Time : ${timeLeft}`;
                 CurrentHeal = 0;
-                
+
+                selectedCard = undefined; //remove card from variable
             })
         }
 
@@ -1537,6 +1593,7 @@ class Attacks {
                 timeleftpara.innerHTML = `Time : ${timeLeft}`;
                 CurrentShield = 0;
                 
+                selectedCard = undefined; //remove card from variable
             })
         }
 
@@ -1588,6 +1645,7 @@ class Attacks {
                 CurrentShield = 0;
             }
 
+            CurrentType = this.Type;
 
             selectedCard = this.card;
             //console.log(selectedCard)
