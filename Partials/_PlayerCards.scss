@@ -1,0 +1,12 @@
+.cards {
+    width: 100%;
+    height: fit-content;
+    min-height: 250px;
+    border: 2px solid white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    overflow-x: auto;
+}

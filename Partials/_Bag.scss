@@ -103,3 +103,7 @@
 .deactivated {
     background-color: grey;
 }
+
+.bag__container__attacks > .bag__attacks {
+    pointer-events: none; 
+}

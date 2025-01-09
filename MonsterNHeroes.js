@@ -58,9 +58,12 @@ let CurrentAttack = 0; // changes depending on the attack selected
 let CurrentHeal = 0; // changes depending on the attack selected
 let CurrentShield = 0; // changes depending on the attack selected
 let CurrentType = 0; // changes depending on the attack selected
-let currentCards = document.querySelectorAll(".bag__attacks"); // current attack list
 let selectedCard;
 let selectedCardTime = 0;
+
+let currentCards = document.querySelectorAll(".bag__attacks"); // current attack list
+let thisTurnCards = document.querySelector(".cards") //where to place different cards each turn
+let cardsByTurn = 5; //number of card choice the player has per turn, might be able to upgrade it somehow...
 
 let isAlive = true; // bool to see the condistion of the player (it more so the alert stops popping out)
 
@@ -72,7 +75,9 @@ let LootDropArray = [];
 let turn = "player"; // to decide if its the turn of the player or the monster
 let MonsterTurnDone = 0; // count how many monster played
 let turnVerificator; // to verify if every enemy played their turn
-let chosenAttack; // which attack the monster will do
+let CurrentlyFighting = false; //to verify if you are in a fight
+
+let chosenAttack; // which attack the monster will do (not used yet)
 
 let timeleftpara = document.querySelector(".timeLeft"); // where to write the time left
 let timeLeft = 6; // the time the player has to play based on the card they play
@@ -856,6 +861,12 @@ function FightWon(lootarray, exp) {
     }
 
     CharacterExpSHEET.innerHTML = `${CharacterExp} / ${Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].ExpNeeded}`;
+
+    for (let i = 0; i < currentCards.length; i++) {
+        bagAttacksContainer.appendChild(currentCards[i]);
+    }
+
+    CurrentlyFighting = false;
 }
 
 /*###########################
@@ -1670,6 +1681,25 @@ setInterval(function () {
     }
 }, 100);
 
+function randomizeTurnCards () {
+    thisTurnCards.innerHTML = "";
+
+    console.log(currentCards);
+    for (let i = 0; i < currentCards.length; i++) {
+        bagAttacksContainer.appendChild(currentCards[i]);
+    }
+
+    let currentCardsArray = [].slice.call(currentCards);
+
+    for (let i = 0; i < cardsByTurn; i++) {
+        let randomNumber = Math.floor(Math.random() * currentCardsArray.length);
+        let randomCard = currentCardsArray[randomNumber];
+        currentCardsArray.splice(randomNumber, 1);
+
+        thisTurnCards.appendChild(randomCard);
+    }
+}
+
 /*###########################
 #############################
 B A G  C O D E
@@ -1721,6 +1751,12 @@ setInterval(function () {
     turnVerificator = enemiesSide.childElementCount;
     //console.log(turnVerificator);
 
+    if (turnVerificator > 0 && CurrentlyFighting == false) {
+        randomizeTurnCards();
+
+        CurrentlyFighting = true;
+    }
+
     if (MonsterTurnDone >= turnVerificator) {
         MonsterTurnDone = 0;
         turn = "player";
@@ -1737,6 +1773,7 @@ setInterval(function () {
 
 function EndTurn() {
     turn = "monster";
+    randomizeTurnCards();
 }
 
 timeleftpara.innerHTML = `Time : ${timeLeft}`;

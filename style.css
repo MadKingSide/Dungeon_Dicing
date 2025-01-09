@@ -145,6 +145,10 @@ body {
   background-color: grey;
 }
 
+.bag__container__attacks > .bag__attacks {
+  pointer-events: none;
+}
+
 .notification {
   position: absolute;
   width: 100vw;
@@ -164,6 +168,20 @@ body {
 
 .ClickToClose {
   margin-top: 10px;
+}
+
+.cards {
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  min-height: 250px;
+  border: 2px solid white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  overflow-x: auto;
 }
 
 .player {
