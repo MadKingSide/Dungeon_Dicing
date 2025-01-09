@@ -5,7 +5,7 @@ V A R I A B L E S
 ###########################*/
 
 let mapContainer = document.querySelector(".map"); //allow the player to choose where to go
-let fightingGround = document.querySelector(".figthing"); //appears when in fight
+let fightingGround = document.querySelector(".fighting"); //appears when in fight
 
 //variable to get items in index.html
 const enemiesSide = document.querySelector(".enemies"); //where the enemies card are
@@ -1424,6 +1424,10 @@ const Heros = {
 
 const PlayerHandler = Object.keys(Heros);
 
+if (CharacterClass == undefined) {
+    document.querySelector(".monsterSelector").classList.add("unDisplay");
+}
+
 
 confirmCreation.addEventListener("click", function () {
 
@@ -1474,6 +1478,8 @@ confirmCreation.addEventListener("click", function () {
 
     });
     //console.log(Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Attacks[0].Damage);
+
+    document.querySelector(".monsterSelector").classList.remove("unDisplay");
 })
 
 

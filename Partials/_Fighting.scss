@@ -1,0 +1,12 @@
+.fighting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.endTurn {
+    margin-bottom: 10px;
+    min-width: 100px;
+    width: 50%;
+    max-width: 300px;
+}
