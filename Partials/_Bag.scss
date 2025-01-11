@@ -50,9 +50,9 @@
         }
     }
 
-    &__items, &__attacks {
+    &__items, &__attacks { 
         width: 20%;
-        height: 250px;
+        height: 80%;
         padding: 10px;
         margin: 10px 2%;
         border: 2px solid white;
@@ -106,4 +106,5 @@
 
 .bag__container__attacks > .bag__attacks {
     pointer-events: none; 
+    height: 250px;
 }

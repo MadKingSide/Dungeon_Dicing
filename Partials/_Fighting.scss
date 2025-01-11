@@ -2,9 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .endTurn {
+    margin-top: 5vh;
     margin-bottom: 10px;
     min-width: 100px;
     width: 50%;

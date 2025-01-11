@@ -16,17 +16,69 @@
     user-select: none !important;
 }
 
+body {
+  position: sticky;
+  top: 0;
+}
+
 main {
-    position: relative;
-    max-width: 1400px;
-    height: 100vh;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  top: 0;
+  left: 50vw;
+  transform: translateX(-50%);
+  max-width: 1400px;
+  width: 100vw;
+  height: 100vh;
+  //min-height: 950px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .unDisplay {
     display: none !important;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba($color: #000000, $alpha: 0.1);
+  border-radius: 0 0 10px 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 0 0 10px 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: blue;
+  border-radius: 0 0 10px 10px;
+}
+
+/* for responsive handling */
+@media screen and (max-height: 950px) {
+  .player {
+    height: 20vh;
+    min-height: 200px;
+  }
+
+  .enemies {
+    height: 20vh;
+    min-height: 200px;
+  }
+
+  .cards {
+    height: 20vh;
+    min-height: 200px;
+  }
+}

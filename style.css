@@ -12,18 +12,15 @@ body {
   background-position: 50% 50%;
   -webkit-backdrop-filter: blur(4px);
           backdrop-filter: blur(4px);
+  background-attachment: fixed;
 }
 
 .enemies {
-  position: absolute;
-  top: 20px;
-  left: 50%;
   width: 90%;
   height: 30vh;
   min-height: 250px;
   border: 2px solid white;
   border-radius: 10px;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -44,10 +41,6 @@ body {
 }
 
 .monsterSelector {
-  position: absolute;
-  top: 50vh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
   min-height: 50px;
   display: flex;
   align-items: center;
@@ -57,9 +50,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .endTurn {
+  margin-top: 5vh;
   margin-bottom: 10px;
   min-width: 100px;
   width: 50%;
@@ -108,7 +103,7 @@ body {
 }
 .bag__items, .bag__attacks {
   width: 20%;
-  height: 250px;
+  height: 80%;
   padding: 10px;
   margin: 10px 2%;
   border: 2px solid white;
@@ -160,6 +155,7 @@ body {
 
 .bag__container__attacks > .bag__attacks {
   pointer-events: none;
+  height: 250px;
 }
 
 .notification {
@@ -169,6 +165,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 2;
 }
 .notification__card {
   width: 80%;
@@ -184,7 +181,7 @@ body {
 }
 
 .cards {
-  width: 100%;
+  width: 90%;
   height: -moz-fit-content;
   height: fit-content;
   min-height: 250px;
@@ -198,15 +195,11 @@ body {
 }
 
 .player {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
   width: 90%;
   height: 30vh;
   min-height: 250px;
   border: 2px solid white;
   border-radius: 10px;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: row;
   overflow: hidden;
@@ -217,7 +210,7 @@ body {
   height: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 10px;
   filter: blur(5px);
 }
@@ -266,16 +259,66 @@ body {
           user-select: none !important;
 }
 
+body {
+  position: sticky;
+  top: 0;
+}
+
 main {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 50vw;
+  transform: translateX(-50%);
   max-width: 1400px;
+  width: 100vw;
   height: 100vh;
   margin: auto;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
 }
 
 .unDisplay {
   display: none !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 10px 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 0 0 10px 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: blue;
+  border-radius: 0 0 10px 10px;
+}
+
+/* for responsive handling */
+@media screen and (max-height: 950px) {
+  .player {
+    height: 20vh;
+    min-height: 200px;
+  }
+  .enemies {
+    height: 20vh;
+    min-height: 200px;
+  }
+  .cards {
+    height: 20vh;
+    min-height: 200px;
+  }
 }/*# sourceMappingURL=style.css.map */

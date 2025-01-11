@@ -80,8 +80,8 @@ let CurrentlyFighting = false; //to verify if you are in a fight
 let chosenAttack; // which attack the monster will do (not used yet)
 
 let timeleftpara = document.querySelector(".timeLeft"); // where to write the time left
-let timeLeft = 6; // the time the player has to play based on the card they play
 let timeFallback = 6;
+let timeLeft = timeFallback; // the time the player has to play based on the card they play
 
 let critRate = 100; // chance to crit (starting from 100 for easier code i hope)
 
