@@ -8,7 +8,7 @@
 </head>
 <body>
     <main>
-
+        <p class="openMenu">Press 'Esc' to open the menu</p>
         <div class="map">
         <div class="monsterSelector">
             <select id="monsterselect" class="monsterSelector__select" onchange="monsterselect(value)">
@@ -93,6 +93,17 @@
             <div class="bag__container bag__container__attacks unDisplay"></div>
         </div>
 
+        <div class="menu unDisplay">
+            <div class="menu__close">X</div>
+            <div class="menu__instruction">
+                <p>Check your bag to see what attacks and items you have.</p>
+                <p>The 'Attack multiplier' depends on your level and will just multiply your damage.</p>
+                <p>'Armor' simply reduce the damage received.</p>
+                <p>'Shield' is a temporary armor the get destroyed by attacks.</p>
+                <p>I will add more in the future...</p>
+            </div>
+            <button>poggers</button> <!--button to save here-->
+        </div>
     </main>
     <script src="./MonsterNHeroes.js"></script>
     <script src="./dragBag.js"></script>

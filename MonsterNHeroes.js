@@ -34,6 +34,9 @@ let bagAttacksMenu = document.querySelector(".bag__menu__attacks"); //the div to
 let bagItemsContainer = document.querySelector(".bag__container__items"); //the bag's item section
 let bagAttacksContainer = document.querySelector(".bag__container__attacks"); //the bag's attack section
 
+let menu = document.querySelector(".menu"); //the menu
+let menuClose = document.querySelector(".menu__close"); //the button to close the menu
+
 let notification = document.querySelector(".notification"); //click anywhere to make the pop up disappear
 let notificationText = document.querySelector(".notification__text"); //the div to use for when the player need to see text (loot, discussion, examining something)
 
@@ -54,12 +57,17 @@ let CharacterHealth;
 let CharacterAttMulti = 1;
 let CharacterArmor;
 let CharacterShield = 0;
+
 let CurrentAttack = 0; // changes depending on the attack selected
 let CurrentHeal = 0; // changes depending on the attack selected
 let CurrentShield = 0; // changes depending on the attack selected
 let CurrentType = 0; // changes depending on the attack selected
 let selectedCard;
 let selectedCardTime = 0;
+
+let CurrentShieldpara = document.querySelector(".Shield");
+let CharacterArmorpara = document.querySelector(".Armor");
+let CharacterAttMultipara = document.querySelector(".AttMulti");
 
 let currentCards = document.querySelectorAll(".bag__attacks"); // current attack list
 let thisTurnCards = document.querySelector(".cards") //where to place different cards each turn
@@ -357,6 +365,7 @@ const monsters = {
     },
     Wolf: {
         Name: "Wolf",
+        Image: "./Assets/Wolf.png",
         Health: 15,
         Attack: 7,
         Exp : 2,
@@ -647,16 +656,26 @@ class Monster {
         this.card = document.createElement("div");
         this.card.classList.add("enemyCard");
 
+        this.image = document.createElement("img");
+
         this.name = document.createElement("h3");
 
         this.healthCount = document.createElement("p");
 
-
         this.attack = document.createElement("p");
 
+        this.card.appendChild(this.image);
         this.card.appendChild(this.name);
         this.card.appendChild(this.healthCount);
         this.card.appendChild(this.attack);
+
+        this.card.addEventListener("mouseenter", () => {
+            console.log("pain");
+        });
+
+        this.card.addEventListener("mouseleave", () => {
+            console.log("shit");
+        });
 
         this.card.addEventListener("click", () => {
             this.GetHit();
@@ -677,6 +696,8 @@ class Monster {
     }*/
 
     selectedMonster(monster) {
+        this.image.src = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Image;
+
         this.name.innerHTML = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Name;
 
         this.healthCount.innerHTML = `Health : ${monsters[enemyCreator[enemyCreator.indexOf(monster)]].Health}`;
@@ -704,6 +725,12 @@ class Monster {
                 this.Health -= CritCalculator();
             } else if (CurrentType == "H") {
                 this.Health += CurrentHeal;
+            } else if (CurrentType == "HS") {
+                selectedCardTime = 0;
+                CurrentAttack = 0; //resets attack
+                CurrentHeal = 0; //resets heal
+    
+                selectedCard = undefined; //remove card from variable
             }
 
             timeLeft -= selectedCardTime;
@@ -733,8 +760,16 @@ class Monster {
     AttackPlayer() {
         if (turn == "monster") {
             //let chosenAttack = monsters[enemyCreator[enemyCreator.indexOf(this.MonsterNum)]].Attack;
-            CharacterHealth -= this.#Attack - CharacterArmor;
+            if (CharacterShield < this.#Attack - CharacterArmor) {
+                CharacterHealth -= (this.#Attack - CharacterArmor) - CharacterShield;
+                CharacterShield = 0;
+            } else {
+                CharacterShield -= (this.#Attack - CharacterArmor);
+            }
+
+            document.querySelector(".Shield").innerHTML = `Shield : ${CharacterShield}`;
             document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
+
             MonsterTurnDone++;
         }
     }
@@ -1706,6 +1741,12 @@ function randomizeTurnCards () {
     }
 }
 
+function updateStats (stat) {
+
+    //not done yet, it would be used to update stats without always writing a whole sentence...
+
+}
+
 /*###########################
 #############################
 B A G  C O D E
@@ -1734,6 +1775,22 @@ bagAttacksMenu.addEventListener("click", function() {
     bagAttacksContainer.classList.remove("unDisplay"); 
     bagItemsContainer.classList.add("unDisplay");
 })
+
+/*###########################
+#############################
+M E N U  C O D E
+#############################
+###########################*/
+
+
+window.addEventListener("keydown", (e) => {
+    if (e.key == "Escape") {
+        menu.classList.remove("unDisplay")
+    }
+})
+
+menuClose.addEventListener("click", function() {menu.classList.add("unDisplay")})
+
 
 /*###########################
 #############################
@@ -1779,6 +1836,12 @@ setInterval(function () {
 
 function EndTurn() {
     turn = "monster";
+
+    CurrentAttack = 0; //resets attack
+    CurrentHeal = 0; //resets heal
+
+    selectedCard = undefined; //remove card from variable
+
     randomizeTurnCards();
 }
 
