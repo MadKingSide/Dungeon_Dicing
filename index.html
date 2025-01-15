@@ -14,6 +14,8 @@
             <select id="monsterselect" class="monsterSelector__select" onchange="monsterselect(value)">
                 <option value="none" selected disabled>Choose a monster</option>
                 <option value="multiple" >Multiple monster</option>
+                <option value="goblinGroup" >Multiple goblin</option>
+                <option value="wolfGroup" >Multiple wolf</option>
             </select>
             <button class="Spawn">Spawn Monster</button>
         </div>
@@ -102,10 +104,25 @@
                 <p>'Shield' is a temporary armor the get destroyed by attacks.</p>
                 <p>I will add more in the future...</p>
             </div>
-            <button>poggers</button> <!--button to save here-->
+            <div class="menu__SaveAndUnsave">
+                <button>poggers</button> <!--button to save here-->
+                <button>unpoggers</button> <!--button to disgard save here-->
+            </div>
+            
         </div>
     </main>
     <script src="./MonsterNHeroes.js"></script>
     <script src="./dragBag.js"></script>
 </body>
 </html>
+
+<!--
+WHAT TO DO NEXT :
+
+-make the other character work
+
+-make it possible to choose what type of enemy you want to face (ex: goblin group, wolf group, etc)
+
+-make the save function work and add a button to erase progress
+
+-->

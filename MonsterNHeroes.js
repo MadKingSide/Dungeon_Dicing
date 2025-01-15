@@ -368,6 +368,23 @@ const monsters = {
         Image: "./Assets/Wolf.png",
         Health: 15,
         Attack: 7,
+        Attacks: [
+            Bite = {
+                Type: "D",
+                Name: "Bite",
+                Damage: 5,
+            },
+            Scratch = {
+                Type: "D",
+                Name: "Scratch",
+                Damage: 4,
+            },
+            Howl = {
+                Type: "SU",
+                Name: "Howl",
+                Summon: "Wolf",
+            },
+        ],
         Exp : 2,
         Loot : 
         {
@@ -620,8 +637,24 @@ document.querySelector(".Spawn").addEventListener("click", function () {
     } else if (monsterselected == "multiple") {
         RandomMonster = [];
 
-        for (let i = 0; i < Math.floor((Math.floor(Math.random() * 3) + 2)); i++) { //minimum of 2 monsters
+        for (let i = 0; i < Math.floor((Math.floor(Math.random() * 3) + 2)); i++) { //minimum of 2 monsters, max of 4
             RandomMonster = enemyCreator[Math.floor((Math.random() * enemyCreator.length) + areaNumber)];
+            new Monster(0, RandomMonster);
+        }
+
+    } else if (monsterselected == "goblinGroup") {
+        RandomMonster = [];
+
+        for (let i = 0; i < Math.floor((Math.floor(Math.random() * 3) + 2)); i++) { //minimum of 2 monsters, max of 4
+            RandomMonster = enemyCreator[Math.floor((Math.random() * 6) + areaNumber)];
+            new Monster(0, RandomMonster);
+        }
+
+    } else if (monsterselected == "wolfGroup") {
+        RandomMonster = [];
+
+        for (let i = 0; i < Math.floor((Math.floor(Math.random() * 3) + 2)); i++) { //minimum of 2 monsters, max of 4
+            RandomMonster = enemyCreator[Math.floor((Math.random() * 4) + 6 + areaNumber)];
             new Monster(0, RandomMonster);
         }
 
@@ -630,6 +663,49 @@ document.querySelector(".Spawn").addEventListener("click", function () {
         new Monster(0, RandomMonster);
     }
 })
+
+function spawnMonster(monster) {
+    /*
+    fightingGround.classList.remove("unDisplay");
+    mapContainer.classList.add("unDisplay");
+
+    let RandomMonster = "nothing";
+    //console.log(monsterselected);
+    if (monsterselected == "none") {
+
+        RandomMonster = enemyCreator[Math.floor((Math.random() * enemyCreator.length) + areaNumber)];
+        new Monster(0, RandomMonster);
+
+    } else if (monsterselected == "multiple") {
+        RandomMonster = [];
+
+        for (let i = 0; i < Math.floor((Math.floor(Math.random() * 3) + 2)); i++) { //minimum of 2 monsters, max of 4
+            RandomMonster = enemyCreator[Math.floor((Math.random() * enemyCreator.length) + areaNumber)];
+            new Monster(0, RandomMonster);
+        }
+
+    } else if (monsterselected == "goblinGroup") {
+        RandomMonster = [];
+
+        for (let i = 0; i < Math.floor((Math.floor(Math.random() * 3) + 2)); i++) { //minimum of 2 monsters, max of 4
+            RandomMonster = enemyCreator[Math.floor((Math.random() * 6) + areaNumber)];
+            new Monster(0, RandomMonster);
+        }
+
+    } else if (monsterselected == "wolfGroup") {
+        RandomMonster = [];
+
+        for (let i = 0; i < Math.floor((Math.floor(Math.random() * 3) + 2)); i++) { //minimum of 2 monsters, max of 4
+            RandomMonster = enemyCreator[Math.floor((Math.random() * 4) + 6 + areaNumber)];
+            new Monster(0, RandomMonster);
+        }
+
+    } else {*/
+        RandomMonster = monster;
+        console.log(monster);
+        new Monster(0, RandomMonster);
+    //}
+}
 
 
 class Monster {
@@ -640,8 +716,13 @@ class Monster {
         this.Health = Health;
         this.#Attack = monsters[enemyCreator[enemyCreator.indexOf(MonsterNum)]].Attack;
         this.MonsterNum = MonsterNum;
+        this.attackType;
+        this.attackName;
+        this.attackSummon;
 
         this.CreateCard()
+
+        this.chooseAttack(this.MonsterNum)
 
         if (!isNaN(this.MonsterNum)) {
             this.RandomMonster(this.MonsterNum);
@@ -662,11 +743,14 @@ class Monster {
 
         this.healthCount = document.createElement("p");
 
+        this.attackNamepara = document.createElement("p");
+
         this.attack = document.createElement("p");
 
         this.card.appendChild(this.image);
         this.card.appendChild(this.name);
         this.card.appendChild(this.healthCount);
+        this.card.appendChild(this.attackNamepara);
         this.card.appendChild(this.attack);
 
         this.card.addEventListener("mouseenter", () => {
@@ -703,9 +787,27 @@ class Monster {
         this.healthCount.innerHTML = `Health : ${monsters[enemyCreator[enemyCreator.indexOf(monster)]].Health}`;
         this.Health = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Health;
 
-        this.attack.innerHTML = `Attack : ${monsters[enemyCreator[enemyCreator.indexOf(monster)]].Attack}`;
+        //this.attack.innerHTML = `Attack : ${monsters[enemyCreator[enemyCreator.indexOf(monster)]].Attack}`;
 
         enemiesSide.appendChild(this.card);
+    }
+
+    chooseAttack(monster) {
+        let randomAttacknumber = Math.floor(Math.random() * monsters[enemyCreator[enemyCreator.indexOf(monster)]].Attacks.length);
+        let randomAttack = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Attacks[randomAttacknumber];
+
+        this.attackType = randomAttack.Type;
+        this.attackName = randomAttack.Name;
+        this.#Attack = randomAttack.Damage;
+        this.attackSummon = randomAttack.Summon;
+
+        this.attackNamepara.innerHTML = `Attack Name : ${this.attackName}`;
+
+        if (this.attackType == "SU") {
+            this.attack.innerHTML = `Summon : ${this.attackSummon}`;
+        } else {
+            this.attack.innerHTML = `Damage : ${this.#Attack}`;
+        }
     }
 
     GetHit() {
@@ -759,16 +861,22 @@ class Monster {
 
     AttackPlayer() {
         if (turn == "monster") {
-            //let chosenAttack = monsters[enemyCreator[enemyCreator.indexOf(this.MonsterNum)]].Attack;
-            if (CharacterShield < this.#Attack - CharacterArmor) {
-                CharacterHealth -= (this.#Attack - CharacterArmor) - CharacterShield;
-                CharacterShield = 0;
-            } else {
-                CharacterShield -= (this.#Attack - CharacterArmor);
+            if (this.attackType == "D") {
+
+                if (CharacterShield < this.#Attack - CharacterArmor) {
+                    CharacterHealth -= (this.#Attack - CharacterArmor) - CharacterShield;
+                    CharacterShield = 0;
+                } else {
+                    CharacterShield -= (this.#Attack - CharacterArmor);
+                }
+
+                document.querySelector(".Shield").innerHTML = `Shield : ${CharacterShield}`;
+                document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
+            } else if (this.attackType == "SU") {
+                spawnMonster(this.attackSummon)
             }
 
-            document.querySelector(".Shield").innerHTML = `Shield : ${CharacterShield}`;
-            document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
+            this.chooseAttack(this.MonsterNum);
 
             MonsterTurnDone++;
         }
@@ -1725,7 +1833,7 @@ setInterval(function () {
 function randomizeTurnCards () {
     thisTurnCards.innerHTML = "";
 
-    console.log(currentCards);
+    //console.log(currentCards);
     for (let i = 0; i < currentCards.length; i++) {
         bagAttacksContainer.appendChild(currentCards[i]);
     }
