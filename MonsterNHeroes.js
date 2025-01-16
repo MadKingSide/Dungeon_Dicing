@@ -100,113 +100,113 @@ L O O T  T A B L E
 ###########################*/
 
 InventoryLoot = {
-    GoblinEar : {
-        Name : "Goblin Ear",
-        Count : 0,
+    GoblinEar: {
+        Name: "Goblin Ear",
+        Count: 0,
     },
-    BrokenGoblinWeapon : {
-        Name : "Broken Goblin Weapon",
-        Count : 0,
+    BrokenGoblinWeapon: {
+        Name: "Broken Goblin Weapon",
+        Count: 0,
     },
-    ShamanStaff : {
-        Name : "Shaman Staff",
-        Count : 0,
+    ShamanStaff: {
+        Name: "Shaman Staff",
+        Count: 0,
     },
-    MagicCrystalShard : {
-        Name : "Magic Crystal Shard",
-        Count : 0,
+    MagicCrystalShard: {
+        Name: "Magic Crystal Shard",
+        Count: 0,
     },
-    SteelSword : {
-        Name : "Steel Sword",
-        Count : 0,
+    SteelSword: {
+        Name: "Steel Sword",
+        Count: 0,
     },
-    UnidentifiedMagicArtefact : {
-        Name : "Unidentified Magic Artefact",
-        Count : 0,
+    UnidentifiedMagicArtefact: {
+        Name: "Unidentified Magic Artefact",
+        Count: 0,
     },
-    WolfClaw : {
-        Name : "Wolf Claw",
-        Count : 0,
+    WolfClaw: {
+        Name: "Wolf Claw",
+        Count: 0,
     },
-    WolfFang : {
-        Name : "Wolf Fang",
-        Count : 0,
+    WolfFang: {
+        Name: "Wolf Fang",
+        Count: 0,
     },
-    WolfFur : {
-        Name : "Wolf Fur",
-        Count : 0,
+    WolfFur: {
+        Name: "Wolf Fur",
+        Count: 0,
     },
-    WerewolfClaw : {
-        Name : "Werewolf Claw",
-        Count : 0,
+    WerewolfClaw: {
+        Name: "Werewolf Claw",
+        Count: 0,
     },
-    WerewolfFang : {
-        Name : "Werewolf Fang",
-        Count : 0,
+    WerewolfFang: {
+        Name: "Werewolf Fang",
+        Count: 0,
     },
-    WerewolfBlood : {
-        Name : "Werewolf Blood",
-        Count : 0,
+    WerewolfBlood: {
+        Name: "Werewolf Blood",
+        Count: 0,
     },
-    WerewolfFur : {
-        Name : "Werewolf Fur",
-        Count : 0,
+    WerewolfFur: {
+        Name: "Werewolf Fur",
+        Count: 0,
     },
-    MagicWolfClaw : {
-        Name : "Magic Wolf Claw",
-        Count : 0,
+    MagicWolfClaw: {
+        Name: "Magic Wolf Claw",
+        Count: 0,
     },
-    MagicWolfFang : {
-        Name : "Magic Wolf Fang",
-        Count : 0,
+    MagicWolfFang: {
+        Name: "Magic Wolf Fang",
+        Count: 0,
     },
-    LightningWolfFur : {
-        Name : "Lightning Wolf Fur",
-        Count : 0,
+    LightningWolfFur: {
+        Name: "Lightning Wolf Fur",
+        Count: 0,
     },
-    CrystalWolfHeart : {
-        Name : "Crystal Wolf Heart",
-        Count : 0,
+    CrystalWolfHeart: {
+        Name: "Crystal Wolf Heart",
+        Count: 0,
     },
-    BearClaw : {
-        Name : "Bear Claw",
-        Count : 0,
+    BearClaw: {
+        Name: "Bear Claw",
+        Count: 0,
     },
-    BearFang : {
-        Name : "Bear Fang",
-        Count : 0,
+    BearFang: {
+        Name: "Bear Fang",
+        Count: 0,
     },
-    BearFur : {
-        Name : "Bear Fur",
-        Count : 0,
+    BearFur: {
+        Name: "Bear Fur",
+        Count: 0,
     },
-    MagicBearClaw : {
-        Name : "Magic Bear Claw",
-        Count : 0,
+    MagicBearClaw: {
+        Name: "Magic Bear Claw",
+        Count: 0,
     },
-    MagicBearFang : {
-        Name : "Magic Bear Fang",
-        Count : 0,
+    MagicBearFang: {
+        Name: "Magic Bear Fang",
+        Count: 0,
     },
-    FireBearFur : {
-        Name : "Fire Bear Fur",
-        Count : 0,
+    FireBearFur: {
+        Name: "Fire Bear Fur",
+        Count: 0,
     },
-    CrystalBearHeart : {
-        Name : "Crystal Bear Heart",
-        Count : 0,
+    CrystalBearHeart: {
+        Name: "Crystal Bear Heart",
+        Count: 0,
     },
-    TrollBlood : {
-        Name : "Troll Blood",
-        Count : 0,
+    TrollBlood: {
+        Name: "Troll Blood",
+        Count: 0,
     },
-    TrollHide : {
-        Name : "Troll Hide",
-        Count : 0,
+    TrollHide: {
+        Name: "Troll Hide",
+        Count: 0,
     },
-    MagicOrb : {
-        Name : "Magic Orb",
-        Count : 0,
+    MagicOrb: {
+        Name: "Magic Orb",
+        Count: 0,
     },
 }
 
@@ -222,144 +222,240 @@ const monsters = {
     SpearGoblin: {
         Name: "Goblin (Spear)",
         Health: 9,
-        Attack: 4,
-        Exp : 1,
-        Loot : 
-        {
-            Number : 1,
-            10 : GoblinEar = {
-                Image : "none",
-                Name : "Goblin Ear",
-                Price : 1,
-                ID : "GoblinEar",
+        Attacks: [
+            LoudScream = {
+                Type: "D",
+                Name: "Loud Scream",
+                Damage: 1,
             },
-            45 : BrokenGoblinWeapon = {
-                Image : "none",
-                Name : "Broken Goblin Weapon",
-                Price : 2,
-                ID : "BrokenGoblinWeapon",
+            Impale = {
+                Type: "D",
+                Name: "Impale",
+                Damage: 4,
+            },
+        ],
+        Exp: 1,
+        Loot:
+        {
+            Number: 1,
+            10: GoblinEar = {
+                Image: "none",
+                Name: "Goblin Ear",
+                Price: 1,
+                ID: "GoblinEar",
+            },
+            45: BrokenGoblinWeapon = {
+                Image: "none",
+                Name: "Broken Goblin Weapon",
+                Price: 2,
+                ID: "BrokenGoblinWeapon",
             },
         }
     },
     SwordGoblin: {
         Name: "Goblin (Sword)",
         Health: 10,
-        Attack: 3,
-        Exp : 1,
-        Loot : 
-        {
-            Number : 1,
-            10 : GoblinEar = {
-                Image : "none",
-                Name : "Goblin Ear",
-                Price : 1,
-                ID : "BrokenGoblinWeapon",
+        Attacks: [
+            LoudScream = {
+                Type: "D",
+                Name: "Loud Scream",
+                Damage: 1,
             },
-            45 : BrokenGoblinWeapon = {
-                Image : "none",
-                Name : "Broken Goblin Weapon",
-                Price : 2,
-                ID : "BrokenGoblinWeapon",
+            Slash = {
+                Type: "D",
+                Name: "Slash",
+                Damage: 3,
+            },
+        ],
+        Exp: 1,
+        Loot:
+        {
+            Number: 1,
+            10: GoblinEar = {
+                Image: "none",
+                Name: "Goblin Ear",
+                Price: 1,
+                ID: "BrokenGoblinWeapon",
+            },
+            45: BrokenGoblinWeapon = {
+                Image: "none",
+                Name: "Broken Goblin Weapon",
+                Price: 2,
+                ID: "BrokenGoblinWeapon",
             },
         }
     },
     MaceGoblin: {
         Name: "Goblin (Mace)",
         Health: 10,
-        Attack: 3,
-        Exp : 1,
-        Loot : 
-        {
-            Number : 1,
-            10 : GoblinEar = {
-                Image : "none",
-                Name : "Goblin Ear",
-                Price : 1,
-                ID : "BrokenGoblinWeapon",
+        Attacks: [
+            LoudScream = {
+                Type: "D",
+                Name: "Loud Scream",
+                Damage: 1,
             },
-            45 : BrokenGoblinWeapon = {
-                Image : "none",
-                Name : "Broken Goblin Weapon",
-                Price : 2,
-                ID : "BrokenGoblinWeapon",
+            Crush = {
+                Type: "D",
+                Name: "Crush",
+                Damage: 3,
+            },
+        ],
+        Exp: 1,
+        Loot:
+        {
+            Number: 1,
+            10: GoblinEar = {
+                Image: "none",
+                Name: "Goblin Ear",
+                Price: 1,
+                ID: "BrokenGoblinWeapon",
+            },
+            45: BrokenGoblinWeapon = {
+                Image: "none",
+                Name: "Broken Goblin Weapon",
+                Price: 2,
+                ID: "BrokenGoblinWeapon",
             },
         }
     },
     BowGoblin: {
         Name: "Goblin (Bow)",
         Health: 8,
-        Attack: 3,
-        Exp : 1,
-        Loot : 
-        {
-            Number : 1,
-            10 : GoblinEar = {
-                Image : "none",
-                Name : "Goblin Ear",
-                Price : 1,
-                ID : "BrokenGoblinWeapon",
+        Attacks: [
+            LoudScream = {
+                Type: "D",
+                Name: "Loud Scream",
+                Damage: 1,
             },
-            45 : BrokenGoblinWeapon = {
-                Image : "none",
-                Name : "Broken Goblin Weapon",
-                Price : 2,
-                ID : "BrokenGoblinWeapon",
+            Rustyarrow = {
+                Type: "D",
+                Name: "Rusty arrow",
+                Damage: 3,
+            },
+        ],
+        Exp: 1,
+        Loot:
+        {
+            Number: 1,
+            10: GoblinEar = {
+                Image: "none",
+                Name: "Goblin Ear",
+                Price: 1,
+                ID: "BrokenGoblinWeapon",
+            },
+            45: BrokenGoblinWeapon = {
+                Image: "none",
+                Name: "Broken Goblin Weapon",
+                Price: 2,
+                ID: "BrokenGoblinWeapon",
             },
         }
     },
     ShamanGoblin: {
         Name: "Goblin Shaman",
         Health: 13,
-        Attack: 5,
-        Exp : 4,
-        Loot : 
+        Attacks: [
+            LoudScream = {
+                Type: "D",
+                Name: "Loud Scream",
+                Damage: 3,
+            },
+            firebolt = {
+                Type: "D",
+                Name: "firebolt",
+                Damage: 5,
+            },
+            IceBullet = {
+                Type: "D",
+                Name: "Ice Bullet",
+                Damage: 7,
+            },
+            WaterStorm = {
+                Type: "D",
+                Name: "Water Storm",
+                Damage: 6,
+            },
+            EarthSpear = {
+                Type: "D",
+                Name: "Earth Spear",
+                Damage: 8,
+            },
+            RepulsiveOffering = {
+                Type: "SU",
+                Name: "Repulsive Offering",
+                Summon: "HeroGoblin",
+            },
+        ],
+        Exp: 4,
+        Loot:
         {
-            Number : 2,
-            10 : GoblinEar = {
-                Image : "none",
-                Name : "Goblin Ear",
-                Price : 1,
-                ID : "GoblinEar",
+            Number: 2,
+            10: GoblinEar = {
+                Image: "none",
+                Name: "Goblin Ear",
+                Price: 1,
+                ID: "GoblinEar",
             },
-            65 : ShamanStaff = {
-                Image : "none",
-                Name : "Shaman Staff",
-                Price : 10,
-                ID : "ShamanStaff",
+            65: ShamanStaff = {
+                Image: "none",
+                Name: "Shaman Staff",
+                Price: 10,
+                ID: "ShamanStaff",
             },
-            90 : MagicCrystalShard = {
-                Image : "none",
-                Name : "Magic Crystal Shard",
-                Price : 16,
-                ID : "MagicCrystalShard",
+            90: MagicCrystalShard = {
+                Image: "none",
+                Name: "Magic Crystal Shard",
+                Price: 16,
+                ID: "MagicCrystalShard",
             },
         }
     },
     HeroGoblin: {
         Name: "Goblin Hero",
         Health: 30,
-        Attack: 7,
-        Exp : 7,
-        Loot : 
+        Attacks: [
+            ProudRoar = {
+                Type: "D",
+                Name: "Proud Roar",
+                Damage: 4,
+            },
+            AgileStab = {
+                Type: "D",
+                Name: "Agile Stab",
+                Damage: 7,
+            },
+            DeceitfulSlash = {
+                Type: "D",
+                Name: "Deceitful Slash",
+                Damage: 6,
+            },
+            PommelCrush = {
+                Type: "D",
+                Name: "Pommel Crush",
+                Damage: 4,
+            },
+        ],
+        Exp: 7,
+        Loot:
         {
-            Number : 4,
-            10 : GoblinEar = {
-                Image : "none",
-                Name : "Goblin Ear",
-                Price : 1,
-                ID : "GoblinEar",
+            Number: 4,
+            10: GoblinEar = {
+                Image: "none",
+                Name: "Goblin Ear",
+                Price: 1,
+                ID: "GoblinEar",
             },
-            30 : SteelSword = {
-                Image : "none",
-                Name : "Steel Sword",
-                Price : 10,
-                ID : "SteelSword",
+            30: SteelSword = {
+                Image: "none",
+                Name: "Steel Sword",
+                Price: 10,
+                ID: "SteelSword",
             },
-            85 : UnidentifiedMagicArtefact = {
-                Image : "none",
-                Name : "Unidentified Magic Artefact",
-                Price : 30,
-                ID : "UnidentifiedMagicArtefact",
+            85: UnidentifiedMagicArtefact = {
+                Image: "none",
+                Name: "Unidentified Magic Artefact",
+                Price: 30,
+                ID: "UnidentifiedMagicArtefact",
             },
         }
     },
@@ -367,7 +463,6 @@ const monsters = {
         Name: "Wolf",
         Image: "./Assets/Wolf.png",
         Health: 15,
-        Attack: 7,
         Attacks: [
             Bite = {
                 Type: "D",
@@ -379,55 +474,81 @@ const monsters = {
                 Name: "Scratch",
                 Damage: 4,
             },
+            Tackle = {
+                Type: "D",
+                Name: "Tackle",
+                Damage: 3,
+            },
             Howl = {
                 Type: "SU",
                 Name: "Howl",
                 Summon: "Wolf",
             },
         ],
-        Exp : 2,
-        Loot : 
+        Exp: 2,
+        Loot:
         {
-            Number : 1,
-            10 : WolfClaw = {
-                Image : "none",
-                Name : "Wolf Claw",
-                Price : 3,
-                ID : "WolfClaw",
+            Number: 1,
+            10: WolfClaw = {
+                Image: "none",
+                Name: "Wolf Claw",
+                Price: 3,
+                ID: "WolfClaw",
             },
-            20 : WolfFang = {
-                Image : "none",
-                Name : "Wolf Fang",
-                Price : 5,
-                ID : "WolfFang",
+            20: WolfFang = {
+                Image: "none",
+                Name: "Wolf Fang",
+                Price: 5,
+                ID: "WolfFang",
             },
-            70 : WolfFur = {
-                Image : "none",
-                Name : "Wolf Fur",
-                Price : 10,
-                ID : "WolfFur",
+            70: WolfFur = {
+                Image: "none",
+                Name: "Wolf Fur",
+                Price: 10,
+                ID: "WolfFur",
             },
         }
     },
     OldWolf: {
         Name: "Old Wolf",
         Health: 7,
-        Attack: 8,
-        Exp : 2,
-        Loot : 
-        {
-            Number : 2,
-            10 : WolfClaw = {
-                Image : "none",
-                Name : "Wolf Claw",
-                Price : 3,
-                ID : "WolfClaw",
+        Attacks: [
+            Scratch = {
+                Type: "D",
+                Name: "Scratch",
+                Damage: 7,
             },
-            20 : WolfFang = {
-                Image : "none",
-                Name : "Wolf Fang",
-                Price : 5,
-                ID : "WolfFang",
+            Tackle = {
+                Type: "D",
+                Name: "Tackle",
+                Damage: 4,
+            },
+            Exhausted = {
+                Type: "D",
+                Name: "Exhausted",
+                Damage: 0,
+            },
+            Howl = {
+                Type: "SU",
+                Name: "Howl",
+                Summon: "OldWolf",
+            },
+        ],
+        Exp: 2,
+        Loot:
+        {
+            Number: 2,
+            10: WolfClaw = {
+                Image: "none",
+                Name: "Wolf Claw",
+                Price: 3,
+                ID: "WolfClaw",
+            },
+            20: WolfFang = {
+                Image: "none",
+                Name: "Wolf Fang",
+                Price: 5,
+                ID: "WolfFang",
             },
         }
     },
@@ -435,33 +556,33 @@ const monsters = {
         Name: "Werewolf",
         Health: 45,
         Attack: 12,
-        Exp : 5,
-        Loot : 
+        Exp: 5,
+        Loot:
         {
-            Number : 2,
-            10 : WerewolfClaw = {
-                Image : "none",
-                Name : "Werewolf Claw",
-                Price : 5,
-                ID : "WerewolfClaw",
+            Number: 2,
+            10: WerewolfClaw = {
+                Image: "none",
+                Name: "Werewolf Claw",
+                Price: 5,
+                ID: "WerewolfClaw",
             },
-            20 : WerewolfFang = {
-                Image : "none",
-                Name : "Werewolf Fang",
-                Price : 8,
-                ID : "WerewolfFang",
+            20: WerewolfFang = {
+                Image: "none",
+                Name: "Werewolf Fang",
+                Price: 8,
+                ID: "WerewolfFang",
             },
-            60 : WerewolfBlood = {
-                Image : "none",
-                Name : "Werewolf Blood",
-                Price : 10,
-                ID : "WerewolfBlood",
+            60: WerewolfBlood = {
+                Image: "none",
+                Name: "Werewolf Blood",
+                Price: 10,
+                ID: "WerewolfBlood",
             },
-            83 : WerewolfFur = {
-                Image : "none",
-                Name : "Werewolf Fur",
-                Price : 13,
-                ID : "WerewolfFur",
+            83: WerewolfFur = {
+                Image: "none",
+                Name: "Werewolf Fur",
+                Price: 13,
+                ID: "WerewolfFur",
             },
         }
     },
@@ -469,33 +590,33 @@ const monsters = {
         Name: "Wolf King",
         Health: 25,
         Attack: 15,
-        Exp : 20,
-        Loot : 
+        Exp: 20,
+        Loot:
         {
-            Number : 3,
-            30 : MagicWolfClaw = {
-                Image : "none",
-                Name : "Magic Wolf Claw",
-                Price : 15,
-                ID : "MagicWolfClaw",
+            Number: 3,
+            30: MagicWolfClaw = {
+                Image: "none",
+                Name: "Magic Wolf Claw",
+                Price: 15,
+                ID: "MagicWolfClaw",
             },
-            50 : MagicWolfFang = {
-                Image : "none",
-                Name : "Magic Wolf Fang",
-                Price : 20,
-                ID : "MagicWolfFang",
+            50: MagicWolfFang = {
+                Image: "none",
+                Name: "Magic Wolf Fang",
+                Price: 20,
+                ID: "MagicWolfFang",
             },
-            75 : LightningWolfFur = {
-                Image : "none",
-                Name : "Lightning Wolf Fur",
-                Price : 30,
-                ID : "LightningWolfFur",
+            75: LightningWolfFur = {
+                Image: "none",
+                Name: "Lightning Wolf Fur",
+                Price: 30,
+                ID: "LightningWolfFur",
             },
-            90 : CrystalWolfHeart = {
-                Image : "none",
-                Name : "Crystal Wolf Heart",
-                Price : 50,
-                ID : "CrystalWolfHeart",
+            90: CrystalWolfHeart = {
+                Image: "none",
+                Name: "Crystal Wolf Heart",
+                Price: 50,
+                ID: "CrystalWolfHeart",
             },
         }
     },
@@ -503,27 +624,27 @@ const monsters = {
         Name: "Bear",
         Health: 50,
         Attack: 10,
-        Exp : 10,
-        Loot : 
+        Exp: 10,
+        Loot:
         {
-            Number : 1,
-            10 : BearClaw = {
-                Image : "none",
-                Name : "Bear Claw",
-                Price : 7,
-                ID : "BearClaw",
+            Number: 1,
+            10: BearClaw = {
+                Image: "none",
+                Name: "Bear Claw",
+                Price: 7,
+                ID: "BearClaw",
             },
-            27 : BearFang = {
-                Image : "none",
-                Name : "Bear Fang",
-                Price : 10,
-                ID : "BearFang",
+            27: BearFang = {
+                Image: "none",
+                Name: "Bear Fang",
+                Price: 10,
+                ID: "BearFang",
             },
-            80 : BearFur = {
-                Image : "none",
-                Name : "Bear Fur",
-                Price : 15,
-                ID : "BearFur",
+            80: BearFur = {
+                Image: "none",
+                Name: "Bear Fur",
+                Price: 15,
+                ID: "BearFur",
             },
         }
     },
@@ -531,33 +652,33 @@ const monsters = {
         Name: "Bear King",
         Health: 70,
         Attack: 17,
-        Exp : 35,
-        Loot : 
+        Exp: 35,
+        Loot:
         {
-            Number : 3,
-            30 : MagicBearClaw = {
-                Image : "none",
-                Name : "Magic Bear Claw",
-                Price : 15,
-                ID : "MagicBearClaw",
+            Number: 3,
+            30: MagicBearClaw = {
+                Image: "none",
+                Name: "Magic Bear Claw",
+                Price: 15,
+                ID: "MagicBearClaw",
             },
-            50 : MagicBearFang = {
-                Image : "none",
-                Name : "Magic Bear Fang",
-                Price : 20,
-                ID : "MagicBearFang",
+            50: MagicBearFang = {
+                Image: "none",
+                Name: "Magic Bear Fang",
+                Price: 20,
+                ID: "MagicBearFang",
             },
-            75 : FireBearFur = {
-                Image : "none",
-                Name : "Fire Bear Fur",
-                Price : 30,
-                ID : "FireBearFur",
+            75: FireBearFur = {
+                Image: "none",
+                Name: "Fire Bear Fur",
+                Price: 30,
+                ID: "FireBearFur",
             },
-            85 : CrystalBearHeart = {
-                Image : "none",
-                Name : "Crystal Bear Heart",
-                Price : 50,
-                ID : "CrystalBearHeart",
+            85: CrystalBearHeart = {
+                Image: "none",
+                Name: "Crystal Bear Heart",
+                Price: 50,
+                ID: "CrystalBearHeart",
             },
         }
     },
@@ -565,27 +686,27 @@ const monsters = {
         Name: "Troll",
         Health: 90,
         Attack: 21,
-        Exp : 50,
-        Loot : 
+        Exp: 50,
+        Loot:
         {
-            Number : 4,
-            15 : TrollBlood = {
-                Image : "none",
-                Name : "Troll Blood",
-                Price : 20,
-                ID : "TrollBlood",
+            Number: 4,
+            15: TrollBlood = {
+                Image: "none",
+                Name: "Troll Blood",
+                Price: 20,
+                ID: "TrollBlood",
             },
-            35 : TrollHide = {
-                Image : "none",
-                Name : "Troll Hide",
-                Price : 25,
-                ID : "TrollHide",
+            35: TrollHide = {
+                Image: "none",
+                Name: "Troll Hide",
+                Price: 25,
+                ID: "TrollHide",
             },
-            95 : MagicOrb = {
-                Image : "none",
-                Name : "Magic Orb",
-                Price : 100,
-                ID : "MagicOrb",
+            95: MagicOrb = {
+                Image: "none",
+                Name: "Magic Orb",
+                Price: 100,
+                ID: "MagicOrb",
             },
         }
     },
@@ -701,9 +822,9 @@ function spawnMonster(monster) {
         }
 
     } else {*/
-        RandomMonster = monster;
-        console.log(monster);
-        new Monster(0, RandomMonster);
+    RandomMonster = monster;
+    console.log(monster);
+    new Monster(0, RandomMonster);
     //}
 }
 
@@ -808,6 +929,7 @@ class Monster {
         } else {
             this.attack.innerHTML = `Damage : ${this.#Attack}`;
         }
+        console.log("Changed");
     }
 
     GetHit() {
@@ -831,7 +953,7 @@ class Monster {
                 selectedCardTime = 0;
                 CurrentAttack = 0; //resets attack
                 CurrentHeal = 0; //resets heal
-    
+
                 selectedCard = undefined; //remove card from variable
             }
 
@@ -839,7 +961,7 @@ class Monster {
             timeleftpara.innerHTML = `Time : ${timeLeft}`;
 
             selectedCard.classList.remove("activated");
-            selectedCard.classList.add("deactivated"); 
+            selectedCard.classList.add("deactivated");
             CurrentAttack = 0; //resets attack
             CurrentHeal = 0; //resets heal
 
@@ -850,7 +972,7 @@ class Monster {
 
             if (this.Health <= 0) {
                 this.card.remove();
-
+                clearInterval(this.interval);
                 MonsterKilled(this.MonsterNum);
             }
 
@@ -861,24 +983,26 @@ class Monster {
 
     AttackPlayer() {
         if (turn == "monster") {
-            if (this.attackType == "D") {
+            if (this.Health > 0) {
+                if (this.attackType == "D") {
 
-                if (CharacterShield < this.#Attack - CharacterArmor) {
-                    CharacterHealth -= (this.#Attack - CharacterArmor) - CharacterShield;
-                    CharacterShield = 0;
-                } else {
-                    CharacterShield -= (this.#Attack - CharacterArmor);
+                    if (CharacterShield < this.#Attack - CharacterArmor) {
+                        CharacterHealth -= (this.#Attack - CharacterArmor) - CharacterShield;
+                        CharacterShield = 0;
+                    } else {
+                        CharacterShield -= (this.#Attack - CharacterArmor);
+                    }
+
+                    document.querySelector(".Shield").innerHTML = `Shield : ${CharacterShield}`;
+                    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
+                } else if (this.attackType == "SU") {
+                    spawnMonster(this.attackSummon)
                 }
 
-                document.querySelector(".Shield").innerHTML = `Shield : ${CharacterShield}`;
-                document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
-            } else if (this.attackType == "SU") {
-                spawnMonster(this.attackSummon)
+                this.chooseAttack(this.MonsterNum);
+                console.log("attacked");
+                MonsterTurnDone++;
             }
-
-            this.chooseAttack(this.MonsterNum);
-
-            MonsterTurnDone++;
         }
     }
 }
@@ -903,11 +1027,11 @@ function MonsterKilled(MonsterKilled) {
 
     for (let i = 0; i < NumberOfLoot; i++) {
         let lootPercentage = Math.floor(Math.random() * 100) + 1;
-        
+
         while (monsters[enemyCreator[enemyCreator.indexOf(MonsterKilled)]].Loot[lootPercentage] == undefined) {
             if (lootPercentage <= 0) {
                 break;
-              }
+            }
             lootPercentage--;
         }
 
@@ -915,7 +1039,7 @@ function MonsterKilled(MonsterKilled) {
             LootDropArray.push(monsters[enemyCreator[enemyCreator.indexOf(MonsterKilled)]].Loot[lootPercentage])
         }
     }
-    
+
     //console.log(LootDropArray)
 
     if (enemiesSide.childElementCount <= 0) {
@@ -931,7 +1055,7 @@ function LevelUp() {
 
     CharacterHealth = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].Health;
     document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
-    
+
     CharacterExpSHEET.innerHTML = `${CharacterExp} / ${Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].ExpNeeded}`;
 
     CharacterAttMulti = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].AttMulti;
@@ -953,29 +1077,29 @@ function FightWon(lootarray, exp) {
         notificationText.appendChild(lootdropped);
 
         if (InventoryLoot[LootTable[LootTable.indexOf(`${element.ID}`)]].Count == 0) {
-    
+
             let lootCard = document.createElement("div");
             lootCard.classList.add("bag__items")
-    
+
             let lootImage = document.createElement("img");
             lootImage.src = `${element.Image}`
-            
+
             let lootName = document.createElement("h3");
             lootName.innerHTML = `${element.Name}`
-    
+
             let lootPrice = document.createElement("h3");
             lootPrice.innerHTML = `Price : ${element.Price}`
-    
+
             InventoryLoot[LootTable[LootTable.indexOf(`${element.ID}`)]].Count++;
             let LootQuantity = document.createElement("h3");
             LootQuantity.innerHTML = `X ${InventoryLoot[LootTable[LootTable.indexOf(`${element.ID}`)]].Count}`;
             LootQuantity.classList.add(`${element.ID}`);
-    
+
             lootCard.appendChild(lootImage);
             lootCard.appendChild(lootName);
             lootCard.appendChild(lootPrice);
             lootCard.appendChild(LootQuantity);
-    
+
             bagItemsContainer.appendChild(lootCard);
         } else {
             InventoryLoot[LootTable[LootTable.indexOf(`${element.ID}`)]].Count++;
@@ -1649,7 +1773,7 @@ class Attacks {
 
         this.CreateCard()
 
-        setInterval( () => {
+        setInterval(() => {
             if (this.Time > timeLeft) {
                 this.card.classList.add("deactivated");
             }
@@ -1697,7 +1821,7 @@ class Attacks {
             this.shieldPara.innerHTML = `Shield : ${this.Shield}`;
             this.card.appendChild(this.shieldPara);
 
-            this.card.addEventListener("dblclick",  () => {
+            this.card.addEventListener("dblclick", () => {
                 CharacterHealth += CurrentHeal;
                 document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
 
@@ -1714,19 +1838,19 @@ class Attacks {
                 selectedCard = undefined; //remove card from variable
             })
         }
-        
+
         if (this.Type == "D") {
             this.attackPara = document.createElement("p");
             this.attackPara.innerHTML = `Damage : ${this.Damage}`;
             this.card.appendChild(this.attackPara);
         }
-        
+
         if (this.Type == "H") {
             this.healPara = document.createElement("p");
             this.healPara.innerHTML = `Heal : ${this.Heal}`;
             this.card.appendChild(this.healPara);
 
-            this.card.addEventListener("dblclick",  () => {
+            this.card.addEventListener("dblclick", () => {
                 CharacterHealth += CurrentHeal;
                 document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
                 this.card.classList.add("deactivated");
@@ -1744,7 +1868,7 @@ class Attacks {
             this.shieldPara.innerHTML = `Shield : ${this.Shield}`;
             this.card.appendChild(this.shieldPara);
 
-            this.card.addEventListener("dblclick",  () => {
+            this.card.addEventListener("dblclick", () => {
                 CharacterShield += CurrentShield;
                 document.querySelector(".Shield").innerHTML = `Shield : ${CharacterShield}`;
                 this.card.classList.add("deactivated");
@@ -1752,17 +1876,17 @@ class Attacks {
                 timeLeft -= selectedCardTime;
                 timeleftpara.innerHTML = `Time : ${timeLeft}`;
                 CurrentShield = 0;
-                
+
                 selectedCard = undefined; //remove card from variable
             })
         }
 
-        
+
 
         this.timePara = document.createElement("p");
         this.timePara.innerHTML = `Time : ${this.Time}`;
         this.card.appendChild(this.timePara);
-        
+
 
 
 
@@ -1830,7 +1954,7 @@ setInterval(function () {
     }
 }, 100);
 
-function randomizeTurnCards () {
+function randomizeTurnCards() {
     thisTurnCards.innerHTML = "";
 
     //console.log(currentCards);
@@ -1849,7 +1973,7 @@ function randomizeTurnCards () {
     }
 }
 
-function updateStats (stat) {
+function updateStats(stat) {
 
     //not done yet, it would be used to update stats without always writing a whole sentence...
 
@@ -1862,7 +1986,7 @@ B A G  C O D E
 ###########################*/
 
 
-bagOpenButton.addEventListener("click", function() {
+bagOpenButton.addEventListener("click", function () {
 
     bag.style.top = "50vh";
     bag.style.left = "50vw";
@@ -1871,16 +1995,16 @@ bagOpenButton.addEventListener("click", function() {
     bag.classList.remove("unDisplay")
 })
 
-bagCloseButton.addEventListener("click", function() {bag.classList.add("unDisplay")})
+bagCloseButton.addEventListener("click", function () { bag.classList.add("unDisplay") })
 
 
 
-bagItemsMenu.addEventListener("click", function() {
-    bagItemsContainer.classList.remove("unDisplay"); 
+bagItemsMenu.addEventListener("click", function () {
+    bagItemsContainer.classList.remove("unDisplay");
     bagAttacksContainer.classList.add("unDisplay");
 })
-bagAttacksMenu.addEventListener("click", function() {
-    bagAttacksContainer.classList.remove("unDisplay"); 
+bagAttacksMenu.addEventListener("click", function () {
+    bagAttacksContainer.classList.remove("unDisplay");
     bagItemsContainer.classList.add("unDisplay");
 })
 
@@ -1897,7 +2021,7 @@ window.addEventListener("keydown", (e) => {
     }
 })
 
-menuClose.addEventListener("click", function() {menu.classList.add("unDisplay")})
+menuClose.addEventListener("click", function () { menu.classList.add("unDisplay") })
 
 
 /*###########################
@@ -1939,7 +2063,7 @@ setInterval(function () {
         timeLeft = timeFallback;
         timeleftpara.innerHTML = `Time : ${timeLeft}`;
     }
-    
+
 }, 100);
 
 function EndTurn() {
