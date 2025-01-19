@@ -54,6 +54,7 @@ let CharacterLevel;
 let CharacterExp;
 
 let CharacterHealth;
+let CharacterMaxHealth; //used to stop overhealing
 let CharacterAttMulti = 1;
 let CharacterArmor;
 let CharacterShield = 0;
@@ -555,7 +556,28 @@ const monsters = {
     WereWolf: {
         Name: "Werewolf",
         Health: 45,
-        Attack: 12,
+        Attacks: [
+            Bite = {
+                Type: "D",
+                Name: "Bite",
+                Damage: 8,
+            },
+            Tackle = {
+                Type: "D",
+                Name: "Tackle",
+                Damage: 7,
+            },
+            Claw = {
+                Type: "D",
+                Name: "Claw",
+                Damage: 8,
+            },
+            Regeneration = {
+                Type: "H",
+                Name: "Regeneration",
+                Heal: 10, //to finish
+            },
+        ],
         Exp: 5,
         Loot:
         {
@@ -840,6 +862,7 @@ class Monster {
         this.attackType;
         this.attackName;
         this.attackSummon;
+        this.MaxHealth;
 
         this.CreateCard()
 
@@ -905,8 +928,9 @@ class Monster {
 
         this.name.innerHTML = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Name;
 
-        this.healthCount.innerHTML = `Health : ${monsters[enemyCreator[enemyCreator.indexOf(monster)]].Health}`;
         this.Health = monsters[enemyCreator[enemyCreator.indexOf(monster)]].Health;
+        this.MaxHealth = this.Health;
+        this.healthCount.innerHTML = `Health : ${this.Health}/${this.MaxHealth}`;;
 
         //this.attack.innerHTML = `Attack : ${monsters[enemyCreator[enemyCreator.indexOf(monster)]].Attack}`;
 
@@ -921,25 +945,34 @@ class Monster {
         this.attackName = randomAttack.Name;
         this.#Attack = randomAttack.Damage;
         this.attackSummon = randomAttack.Summon;
+        this.Heal = randomAttack.Heal;
 
         this.attackNamepara.innerHTML = `Attack Name : ${this.attackName}`;
 
         if (this.attackType == "SU") {
             this.attack.innerHTML = `Summon : ${this.attackSummon}`;
-        } else {
+        } else if (this.attackType == "D") {
             this.attack.innerHTML = `Damage : ${this.#Attack}`;
-        }
-        console.log("Changed");
+        } else if (this.attackType == "H") {
+            this.attack.innerHTML = `Heal : ${this.Heal}`;
+        }        
+        
+        //console.log("Changed");
     }
 
     GetHit() {
         if (selectedCard != undefined) {
 
-            if (CurrentType == "DH") {
+            if (CurrentType == "DH") { //Hitting the enemy and heal yourself
                 this.Health -= CritCalculator();
 
                 CharacterHealth += CurrentHeal;
-                document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
+                if (CharacterHealth > CharacterMaxHealth) {
+                    CharacterHealth = CharacterMaxHealth;
+                    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}/${CharacterMaxHealth}`;
+                } else {
+                    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}/${CharacterMaxHealth}`;
+                }
             } else if (CurrentType == "DS") {
                 this.Health -= CritCalculator();
 
@@ -947,8 +980,11 @@ class Monster {
                 document.querySelector(".Shield").innerHTML = `Shield : ${CharacterShield}`;
             } else if (CurrentType == "D") {
                 this.Health -= CritCalculator();
-            } else if (CurrentType == "H") {
+            } else if (CurrentType == "H") { //if you want to heal the enemy...
                 this.Health += CurrentHeal;
+                if (this.Health > this.MaxHealth) {
+                    this.Health = this.MaxHealth;
+                }
             } else if (CurrentType == "HS") {
                 selectedCardTime = 0;
                 CurrentAttack = 0; //resets attack
@@ -967,7 +1003,7 @@ class Monster {
 
             selectedCard = undefined; //remove card from variable
 
-            this.healthCount.innerHTML = `Health : ${this.Health}`;
+            this.healthCount.innerHTML = `Health : ${this.Health}/${this.MaxHealth}`;;
 
 
             if (this.Health <= 0) {
@@ -994,13 +1030,23 @@ class Monster {
                     }
 
                     document.querySelector(".Shield").innerHTML = `Shield : ${CharacterShield}`;
-                    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
+                    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}/${CharacterMaxHealth}`;
                 } else if (this.attackType == "SU") {
                     spawnMonster(this.attackSummon)
+                } else if (this.attackType == "H") {
+                    this.Health += this.Heal;
+
+                    if (this.Health > this.MaxHealth) {
+                        this.Health = this.MaxHealth;
+                        this.healthCount.innerHTML = `Health : ${this.Health}/${this.MaxHealth}`;
+                    } else {
+                        this.healthCount.innerHTML = `Health : ${this.Health}/${this.MaxHealth}`;;
+                    }
+                    
                 }
 
                 this.chooseAttack(this.MonsterNum);
-                console.log("attacked");
+                //console.log("attacked");
                 MonsterTurnDone++;
             }
         }
@@ -1054,7 +1100,8 @@ function LevelUp() {
     CharacterLevelSHEET.innerHTML = ` Level : ${CharacterLevel}`;
 
     CharacterHealth = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].Health;
-    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
+    CharacterMaxHealth = CharacterHealth;
+    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}/${CharacterMaxHealth}`;
 
     CharacterExpSHEET.innerHTML = `${CharacterExp} / ${Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].ExpNeeded}`;
 
@@ -1116,7 +1163,7 @@ function FightWon(lootarray, exp) {
     LootDropArray = [];
 
     CharacterHealth = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].Health;
-    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
+    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}/${CharacterMaxHealth}`;
 
     notification.classList.remove("unDisplay");
 
@@ -1728,7 +1775,8 @@ confirmCreation.addEventListener("click", function () {
     CharacterExpSHEET.innerHTML = `${CharacterExp} / ${Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].ExpNeeded}`;
 
     CharacterHealth = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].Health;
-    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
+    CharacterMaxHealth = CharacterHealth;
+    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}/${CharacterMaxHealth}`;
 
     CharacterAttMulti = Heros[PlayerHandler[PlayerHandler.indexOf(CharacterClass)]].Levels[CharacterLevel - 1].AttMulti;
     document.querySelector(".AttMulti").innerHTML = `Attack Multiplier : ${CharacterAttMulti}`;
@@ -1823,7 +1871,12 @@ class Attacks {
 
             this.card.addEventListener("dblclick", () => {
                 CharacterHealth += CurrentHeal;
-                document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
+                if (CharacterHealth > CharacterMaxHealth) {
+                    CharacterHealth = CharacterMaxHealth;
+                    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}/${CharacterMaxHealth}`;
+                } else {
+                    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}/${CharacterMaxHealth}`;
+                }
 
                 CharacterShield += CurrentShield;
                 document.querySelector(".Shield").innerHTML = `Shield : ${CharacterShield}`;
@@ -1852,7 +1905,13 @@ class Attacks {
 
             this.card.addEventListener("dblclick", () => {
                 CharacterHealth += CurrentHeal;
-                document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}`;
+                if (CharacterHealth > CharacterMaxHealth) {
+                    CharacterHealth = CharacterMaxHealth;
+                    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}/${CharacterMaxHealth}`;
+                } else {
+                    document.querySelector(".healthBar").innerHTML = `Health : ${CharacterHealth}/${CharacterMaxHealth}`;
+                }
+
                 this.card.classList.add("deactivated");
 
                 timeLeft -= selectedCardTime;
@@ -1893,7 +1952,11 @@ class Attacks {
         bagAttacksContainer.appendChild(this.card);
 
         this.card.addEventListener("click", () => {
-            this.ActivateCard()
+            if (this.card.classList.contains("activated")) {
+                this.DeActivateCard();
+            } else {
+                this.ActivateCard();
+            }
         });
 
         currentCards = document.querySelectorAll(".bag__attacks");
@@ -1941,6 +2004,16 @@ class Attacks {
 
         }
 
+    }
+
+    DeActivateCard() {
+        for (let i = 0; i < currentCards.length; i++) {
+            currentCards[i].classList.remove("activated");
+        }
+
+        CurrentType = undefined;
+
+        selectedCard = undefined; //remove card from variable
     }
 }
 
