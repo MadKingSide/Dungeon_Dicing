@@ -611,7 +611,33 @@ const monsters = {
     WolfKing: {
         Name: "Wolf King",
         Health: 25,
-        Attack: 15,
+        Attacks: [
+            Scratch = {
+                Type: "D",
+                Name: "Scratch",
+                Damage: 9,
+            },
+            Tackle = {
+                Type: "D",
+                Name: "Tackle",
+                Damage: 7,
+            },
+            Howl = {
+                Type: "SU",
+                Name: "Howl",
+                Summon: "Wolf",
+            },
+            MoonShine = {
+                Type: "H",
+                Name: "Moon Shine",
+                Heal: 15,
+            },
+            PredatorsPresence = {//maybe change this for a debuff
+                Type: "D",
+                Name: "Predator's Presence",
+                Damage: 5,
+            },
+        ],
         Exp: 20,
         Loot:
         {
@@ -645,7 +671,28 @@ const monsters = {
     Bear: {
         Name: "Bear",
         Health: 50,
-        Attack: 10,
+        Attacks: [
+            Scratch = {
+                Type: "D",
+                Name: "Scratch",
+                Damage: 12,
+            },
+            Bite = {
+                Type: "D",
+                Name: "Bite",
+                Damage: 15,
+            },
+            Tackle = {
+                Type: "D",
+                Name: "Tackle",
+                Damage: 10,
+            },
+            Roar = {
+                Type: "D",
+                Name: "Roar",
+                Damage: 9,
+            },
+        ],
         Exp: 10,
         Loot:
         {
@@ -673,7 +720,38 @@ const monsters = {
     BearKing: {
         Name: "Bear King",
         Health: 70,
-        Attack: 17,
+        Attacks: [
+            Scratch = {
+                Type: "D",
+                Name: "Scratch",
+                Damage: 12,
+            },
+            Bite = {
+                Type: "D",
+                Name: "Bite",
+                Damage: 15,
+            },
+            Tackle = {
+                Type: "D",
+                Name: "Tackle",
+                Damage: 10,
+            },
+            Roar = {
+                Type: "D",
+                Name: "Roar",
+                Damage: 9,
+            },
+            BloodThirst = {
+                Type: "D",
+                Name: "Blood Thirst",
+                Damage: 15,
+            },
+            FreshMeat = {
+                Type: "H",
+                Name: "FreshMeat",
+                Heal: 20,
+            },
+        ],
         Exp: 35,
         Loot:
         {
@@ -707,7 +785,38 @@ const monsters = {
     Troll: {
         Name: "Troll",
         Health: 90,
-        Attack: 21,
+        Attacks: [
+            Smash = {
+                Type: "D",
+                Name: "Smash",
+                Damage: 12,
+            },
+            Smash = {
+                Type: "D",
+                Name: "Smash",
+                Damage: 12,
+            },
+            Smash = {
+                Type: "D",
+                Name: "Smash",
+                Damage: 12,
+            },
+            Smash = {
+                Type: "D",
+                Name: "Smash",
+                Damage: 12,
+            },
+            Roar = {
+                Type: "D",
+                Name: "Roar",
+                Damage: 9,
+            },
+            TrollsBlood = {
+                Type: "H",
+                Name: "Troll's Blood",
+                Heal: 30,
+            },
+        ],
         Exp: 50,
         Loot:
         {
