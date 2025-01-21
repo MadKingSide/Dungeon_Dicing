@@ -916,6 +916,48 @@ document.querySelector(".Spawn").addEventListener("click", function () {
     }
 })
 
+function MonsterSpawnerGroup(monster) {
+
+    fightingGround.classList.remove("unDisplay");
+    mapContainer.classList.add("unDisplay");
+
+    let RandomMonster = "nothing";
+    //console.log(monsterselected);
+    if (monster == "none") {
+
+        RandomMonster = enemyCreator[Math.floor((Math.random() * enemyCreator.length) + areaNumber)];
+        new Monster(0, RandomMonster);
+
+    } else if (monster == "multiple") {
+        RandomMonster = [];
+
+        for (let i = 0; i < Math.floor((Math.floor(Math.random() * 3) + 2)); i++) { //minimum of 2 monsters, max of 4
+            RandomMonster = enemyCreator[Math.floor((Math.random() * enemyCreator.length) + areaNumber)];
+            new Monster(0, RandomMonster);
+        }
+
+    } else if (monster == "goblinGroup") {
+        RandomMonster = [];
+
+        for (let i = 0; i < Math.floor((Math.floor(Math.random() * 3) + 2)); i++) { //minimum of 2 monsters, max of 4
+            RandomMonster = enemyCreator[Math.floor((Math.random() * 6) + areaNumber)];
+            new Monster(0, RandomMonster);
+        }
+
+    } else if (monster == "wolfGroup") {
+        RandomMonster = [];
+
+        for (let i = 0; i < Math.floor((Math.floor(Math.random() * 3) + 2)); i++) { //minimum of 2 monsters, max of 4
+            RandomMonster = enemyCreator[Math.floor((Math.random() * 4) + 6 + areaNumber)];
+            new Monster(0, RandomMonster);
+        }
+
+    } else {
+        RandomMonster = monster;
+        new Monster(0, RandomMonster);
+    }
+}
+
 function spawnMonster(monster) {
     /*
     fightingGround.classList.remove("unDisplay");
@@ -966,7 +1008,7 @@ class Monster {
 
     constructor(Health, MonsterNum) {
         this.Health = Health;
-        this.#Attack = monsters[enemyCreator[enemyCreator.indexOf(MonsterNum)]].Attack;
+        this.#Attack;
         this.MonsterNum = MonsterNum;
         this.attackType;
         this.attackName;
@@ -1692,7 +1734,69 @@ const Heros = {
     },
     Mage: {
         Name: "Mage",
-        Attack: 5,
+        Attacks: [
+            Kick = {
+                Type: "D",
+                Name: "Kick",
+                Damage: 2,
+                Time: 1.5,
+            },
+            MagicArtifact = {
+                Type: "HS",
+                Name: "Magic Artifact",
+                Heal: 10,
+                Shield: 10,
+                Time: 4,
+            },
+            MagicShield = {
+                Type: "S",
+                Name: "Magic Shield",
+                Shield: 7,
+                Time: 2,
+            },
+            Firebolt = {
+                Type: "D",
+                Name: "Firebolt",
+                Damage: 7,
+                Time: 3,
+            },
+            MagicMissile = {
+                Type: "D",
+                Name: "Magic Missile",
+                Damage: 5,
+                Time: 2,
+            },
+            Eruption = {
+                Type: "D",
+                Name: "Eruption",
+                Damage: 10,
+                Time: 4.5,
+            },
+            WindBlades = {
+                Type: "D",
+                Name: "Wind Blades",
+                Damage: 5,
+                Time: 2.5,
+            },
+            EarthBullets = {
+                Type: "D",
+                Name: "Earth Bullets",
+                Damage: 4,
+                Time: 2,
+            },
+            HealingPotion = {
+                Type: "H",
+                Name: "Healing Potion",
+                Damage: 6,
+                Time: 2,
+            },
+            HealingPotion = {
+                Type: "H",
+                Name: "Healing Potion",
+                Damage: 6,
+                Time: 2,
+            },
+        ],
         Levels: [
             lvl1 = {
                 Level: 1,
@@ -1766,7 +1870,7 @@ const Heros = {
             },
         ]
     },
-    Summoner: {
+    /*Summoner: {
         Name: "Summoner",
         Attack: 5,
         Levels: [
@@ -1841,7 +1945,7 @@ const Heros = {
                 ExpNeeded: 500,
             },
         ]
-    },
+    },*/
 }
 
 
